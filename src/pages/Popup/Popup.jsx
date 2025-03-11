@@ -19,6 +19,16 @@ const Popup = () => {
         >
           Learn React!
         </a>
+        <button
+          onClick={() => {
+            chrome.runtime.sendMessage({
+              action: 'OPEN_SITE_UDEMY',
+              url: 'https://www.udemy.com',
+            });
+          }}
+        >
+          Open New Tab
+        </button>
       </header>
     </div>
   );
