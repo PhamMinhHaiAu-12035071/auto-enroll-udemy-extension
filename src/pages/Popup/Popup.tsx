@@ -1,13 +1,26 @@
 import React from 'react';
-import logo from '../../assets/img/logo.svg';
-import Greetings from '../../containers/Greetings/Greetings';
+import { Coupon, RowCoupon } from '../../type';
 import './Popup.css';
 
-const Popup = () => {
+interface PopupProps {
+  rowCoupons: RowCoupon[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/pages/Popup/Popup.jsx</code> and save to reload.
         </p>
@@ -30,6 +43,16 @@ const Popup = () => {
           Open New Tab
         </button>
       </header>
+      <div>
+        {rowCoupons.map((rowCoupon: RowCoupon) => {
+          const coupon: Coupon = rowCoupon.coupon;
+          return (
+            <div key={rowCoupon.id}>
+              <h3>{coupon.title}</h3>
+            </div>
+          )
+        })}
+      </div>
     </div>
   );
 };

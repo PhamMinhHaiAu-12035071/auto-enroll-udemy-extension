@@ -2,7 +2,6 @@ import {
   ButtonStatus,
   CompleteEnrollCourseMessage,
   Coupon,
-  Price,
 } from './types';
 
 export const checkoutCartPage = (tabId: number, coupon: Coupon) => {
@@ -10,59 +9,15 @@ export const checkoutCartPage = (tabId: number, coupon: Coupon) => {
   const sendCompleteEnrollCourseMessage = (
     tabId: number,
     coupon: Coupon,
-    price: Price
   ) => {
     const message: CompleteEnrollCourseMessage = {
       action: 'COMPLETE_ENROLL_COURSE',
       coupon: coupon,
-      price: price,
       tabId: tabId,
     };
     chrome.runtime.sendMessage(message);
   };
 
-  const getPrice = (): Price | undefined => {
-    const priceElement = document.querySelector(
-      `section[data-purpose="pricing-summary-container"] div[data-purpose="list-amount-summary"] > span:last-child`
-    );
-    const priceText = priceElement?.textContent?.trim();
-
-    if (!priceText) return undefined;
-
-    try {
-      // Tách currency symbol/code và số
-      const cleanText = priceText.trim();
-
-      // Lọc ra các ký tự số, dấu chấm và phẩy
-      const numericPart = cleanText.replace(/[^\d.,]/g, '');
-
-      // Lọc ra currency (ký tự không phải số, dấu chấm, phẩy và khoảng trắng)
-      const currencyPart = cleanText.replace(/[\d.,\s]/g, '');
-
-      // Xử lý chuỗi số để chuyển đổi đúng định dạng
-      const normalizedNumber = numericPart
-        // Xóa tất cả dấu chấm nếu có (thường dùng cho ngăn cách hàng nghìn)
-        .replace(/\./g, '')
-        // Thay thế dấu phẩy thành dấu chấm (để parse thành số)
-        .replace(/,/g, '');
-
-      // Chuyển đổi chuỗi số thành số thực
-      const number = parseFloat(normalizedNumber);
-
-      if (isNaN(number)) {
-        console.error('Không thể chuyển đổi giá thành số:', numericPart);
-        return undefined;
-      }
-
-      return {
-        value: number,
-        currency: currencyPart || 'none',
-      };
-    } catch (error) {
-      console.error('Error parsing price:', error);
-      return undefined;
-    }
-  };
 
   // Kiểm tra xem trang có đang hiển thị skeleton loading không
   const isSkeletonLoading = (): boolean => {
@@ -134,14 +89,10 @@ export const checkoutCartPage = (tabId: number, coupon: Coupon) => {
         isEnrollNowButton(buttonStatus.buttonText)
       ) {
         console.log('Đã nhận được message enroll course');
-        const price = getPrice();
-        console.log('price', price);
-        if (price) {
-          clickEnrollButton();
-          sendCompleteEnrollCourseMessage(tabId, coupon, price);
-          hasMessageSent = true;
-          observer.disconnect();
-        }
+        clickEnrollButton();
+        sendCompleteEnrollCourseMessage(tabId, coupon);
+        hasMessageSent = true;
+        observer.disconnect();
       }
     };
 

@@ -1,3 +1,3 @@
-import { main } from './services/udemy/main'
+import { main } from '../../services/udemy/main'
 
 main()

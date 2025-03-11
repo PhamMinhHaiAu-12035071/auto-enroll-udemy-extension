@@ -1,3 +1,5 @@
+import { Coupon } from "../../type";
+
 // Define interface cho network resource
 export interface UdemyNetworkResource {
   name: string;
@@ -33,7 +35,6 @@ export interface EnrollCourseMessage {
 export interface CompleteEnrollCourseMessage {
   action: 'COMPLETE_ENROLL_COURSE';
   coupon: Coupon;
-  price: Price;
   tabId: number;
 }
 
@@ -59,23 +60,8 @@ export type UdemyMessage =
   | GotoCourseMessage;
 
 // Define interface cho mock data
-export interface Coupon {
-  title: string;
-  link: string;
-  couponCode: string;
-  isExpired: boolean;
-  checkTime: string;
-  rating: number;
-  authors: string[];
-  enrollStudents: number;
-  language: string;
-  topics: string[];
-}
 
-export type Price = {
-  value: number;
-  currency: string;
-};
+
 
 // Define enum cho các trạng thái của khóa học
 export enum CourseEnrollStatus {
@@ -88,7 +74,6 @@ export enum CourseEnrollStatus {
 export interface EnrolledCourseDetail {
   coupon: Coupon;
   status: CourseEnrollStatus;
-  originalPrice?: Price; // Giá gốc (nếu status là ENROLL_NOW)
 }
 
 // Interface cho báo cáo tổng hợp
