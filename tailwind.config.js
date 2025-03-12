@@ -12,6 +12,7 @@ module.exports = {
         primary: 'var(--color-primary)',
         'primary-dark': 'var(--color-primary-dark)',
         secondary: 'var(--color-secondary)',
+        inactive: 'var(--color-inactive)',
         base: '#f2e6f7'
       }
     }

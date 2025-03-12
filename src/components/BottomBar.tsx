@@ -47,14 +47,14 @@ const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'course', onTabChang
     }, [activeTab]);
 
     return (
-        <div className="px-2 py-2 w-full bg-primary">
+        <div className="w-full bg-primary h-[56px] flex items-center">
             <div
                 ref={tabsContainerRef}
-                className="relative flex items-center justify-between bg-primary rounded-full p-1 w-full"
+                className="relative flex items-center justify-between bg-primary w-full px-4"
             >
                 {/* Animated background indicator */}
                 <div
-                    className="absolute bg-primary-dark rounded-full transition-all duration-[350ms] ease-in-out h-[calc(100%-8px)]"
+                    className="absolute bg-primary-dark rounded-full transition-all duration-[350ms] ease-in-out h-[40px]"
                     style={{
                         left: indicatorStyle.left,
                         width: indicatorStyle.width,
@@ -70,19 +70,23 @@ const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'course', onTabChang
                             data-tab={tab.id}
                             onClick={() => handleTabClick(tab.id as TabType)}
                             className={`
-                                relative z-10 flex items-center justify-center py-1.5 rounded-full transition-colors duration-300
-                                flex-1 text-center
-                                ${isActive ? 'text-white font-medium' : 'text-gray-600 hover:text-gray-800'}
+                                relative z-10 flex items-center justify-center h-[40px] rounded-full transition-colors duration-300
+                                flex-1 text-center font-craft-demi
+                                ${isActive ? 'text-white' : 'text-inactive hover:text-white/90'}
                             `}
                         >
                             <div className="flex items-center justify-center">
                                 <div
-                                    className={`transition-transform duration-[350ms] ease-in-out ${isActive ? '-translate-x-1' : 'translate-x-0'}`}
+                                    className={`transition-transform duration-[350ms] ease-in-out 
+                                        ${isActive ? '-translate-x-1 text-white' : 'translate-x-0 text-inactive'}
+                                    `}
                                 >
                                     {tab.icon}
                                 </div>
                                 <span
-                                    className={`text-sm whitespace-nowrap overflow-hidden transition-all duration-[350ms] ease-in-out ${isActive ? 'opacity-100 max-w-[200px]' : 'opacity-0 ml-0 max-w-0'}`}
+                                    className={`text-sm whitespace-nowrap overflow-hidden transition-all duration-[350ms] ease-in-out 
+                                        ${isActive ? 'opacity-100 max-w-[200px] ml-1' : 'opacity-0 ml-0 max-w-0'}
+                                    `}
                                 >
                                     {tab.label}
                                 </span>
