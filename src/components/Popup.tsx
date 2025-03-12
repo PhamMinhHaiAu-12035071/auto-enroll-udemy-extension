@@ -4,6 +4,7 @@ import type { TabType } from './BottomBar';
 import { RowCoupon } from '../type';
 import BottomBar from './BottomBar';
 import Pager from './Pager';
+import CourseCard from './Course/CourseCard';
 
 interface PopupProps {
     rowCoupons: RowCoupon[];
@@ -24,7 +25,14 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
             // Course Tab
             <div key="course" className="h-full p-4 overflow-y-auto">
                 <h2 className="text-xl font-bold mb-2">Courses</h2>
-                <p className="text-gray-600">Browse available Udemy courses</p>
+                <p className="text-gray-600 mb-4">Browse available Udemy courses</p>
+
+                {/* Featured Course Card */}
+                <div className="mb-6">
+                    <CourseCard />
+                </div>
+
+                {/* Existing rowCoupons list */}
                 <div className="mt-4">
                     {rowCoupons.length > 0 ? (
                         rowCoupons.map((rowCoupon) => (
