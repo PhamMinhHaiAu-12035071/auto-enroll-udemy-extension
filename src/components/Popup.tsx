@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import TabBar from './TabBar';
-import type { TabType } from './TabBar';
+import Header from './Header';
+import type { TabType } from './BottomBar';
 import { RowCoupon } from '../type';
-
+import BottomBar from './BottomBar';
 
 interface PopupProps {
     rowCoupons: RowCoupon[];
@@ -24,7 +24,7 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
         switch (currentTab) {
             case 'course':
                 return (
-                    <div className="p-4">
+                    <div className="h-full p-4 overflow-y-auto">
                         <h2 className="text-xl font-bold mb-2">Courses</h2>
                         <p className="text-gray-600">Browse available Udemy courses</p>
                         {/* Hiển thị danh sách khóa học từ rowCoupons */}
@@ -44,7 +44,7 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
                 );
             case 'history':
                 return (
-                    <div className="p-4">
+                    <div className="h-full p-4 overflow-y-auto">
                         <h2 className="text-xl font-bold mb-2">Enrollment History</h2>
                         <p className="text-gray-600">View your enrollment history</p>
                         <div className="mt-4">
@@ -54,7 +54,7 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
                 );
             case 'analysis':
                 return (
-                    <div className="p-4">
+                    <div className="h-full p-4 overflow-y-auto">
                         <h2 className="text-xl font-bold mb-2">Analysis</h2>
                         <p className="text-gray-600">Course enrollment statistics</p>
                         <div className="mt-4 space-y-3">
@@ -87,20 +87,18 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
     }
 
     return (
-        <div className="relative min-h-[500px] w-[350px] bg-white">
-            {/* Header */}
-            <header className="bg-purple-600 text-white p-4">
-                <h1 className="text-xl font-bold">Udemy Auto Enroll</h1>
-            </header>
-
-            <div className="sticky top-0 z-10 bg-white w-[300px]">
-                <TabBar defaultTab="course" onTabChange={handleTabChange} />
-            </div>
+        <div className="relative h-[500px] w-[350px] bg-base flex flex-col">
+            <Header title="Udemy Auto Enroll" />
 
             {/* Main Content */}
-            <main className="mt-1 overflow-auto">
+            <main className="flex-1 h-0">
                 {renderContent()}
             </main>
+
+            {/* Bottom Navigation */}
+            <div className="sticky bottom-0 left-0 right-0">
+                <BottomBar defaultTab="course" onTabChange={handleTabChange} />
+            </div>
         </div>
     );
 };

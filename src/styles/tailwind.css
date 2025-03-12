@@ -40,3 +40,15 @@
       @apply font-craft;
     }
 }
+
+:root {
+  --color-primary: #cce5e5;
+  --color-primary-dark: #2A9D8F;
+  --color-secondary: #4a5568;
+}
+
+[data-theme='dark'] {
+  --color-primary: #99cccc;
+  --color-primary-dark: #1D7268;
+  --color-secondary: #2d3748;
+}

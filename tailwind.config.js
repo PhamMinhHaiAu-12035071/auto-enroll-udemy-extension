@@ -7,6 +7,12 @@ module.exports = {
         craft: ['Craft Rounded', 'sans-serif'],
         'craft-demi': ['Craft Rounded Demi', 'sans-serif'],
         'craft-cd': ['Craft Rounded Cd', 'sans-serif']
+      },
+      colors: {
+        primary: 'var(--color-primary)',
+        'primary-dark': 'var(--color-primary-dark)',
+        secondary: 'var(--color-secondary)',
+        base: '#f2e6f7'
       }
     }
   },

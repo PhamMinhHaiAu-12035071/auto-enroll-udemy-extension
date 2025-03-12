@@ -3,12 +3,12 @@ import { CourseIcon, HistoryIcon, AnalysisIcon } from './icons';
 
 export type TabType = 'course' | 'history' | 'analysis';
 
-interface TabBarProps {
+interface BottomBarProps {
     defaultTab?: TabType;
     onTabChange?: (tab: TabType) => void;
 }
 
-const TabBar: React.FC<TabBarProps> = ({ defaultTab = 'course', onTabChange }) => {
+const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'course', onTabChange }) => {
     const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
     const tabsContainerRef = useRef<HTMLDivElement>(null);
     const [indicatorStyle, setIndicatorStyle] = useState({
@@ -47,14 +47,14 @@ const TabBar: React.FC<TabBarProps> = ({ defaultTab = 'course', onTabChange }) =
     }, [activeTab]);
 
     return (
-        <div className="px-2 py-2 w-full">
+        <div className="px-2 py-2 w-full bg-primary">
             <div
                 ref={tabsContainerRef}
-                className="relative flex items-center justify-between bg-gray-100 rounded-full p-1 w-full"
+                className="relative flex items-center justify-between bg-primary rounded-full p-1 w-full"
             >
                 {/* Animated background indicator */}
                 <div
-                    className="absolute bg-blue-500 rounded-full transition-all duration-[350ms] ease-in-out h-[calc(100%-8px)]"
+                    className="absolute bg-primary-dark rounded-full transition-all duration-[350ms] ease-in-out h-[calc(100%-8px)]"
                     style={{
                         left: indicatorStyle.left,
                         width: indicatorStyle.width,
@@ -95,4 +95,4 @@ const TabBar: React.FC<TabBarProps> = ({ defaultTab = 'course', onTabChange }) =
     );
 };
 
-export default TabBar; 
+export default BottomBar; 
