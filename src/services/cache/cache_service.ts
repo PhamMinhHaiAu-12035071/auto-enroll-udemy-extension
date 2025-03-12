@@ -10,7 +10,7 @@ const DEFAULT_CACHE_DURATION = 3 * 24 * 60 * 60 * 1000;
  * Kiểm tra xem chrome.storage API có khả dụng không
  */
 const isChromeStorageAvailable = (): boolean => {
-    return typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local;
+    return typeof chrome !== 'undefined' && !!chrome.storage && !!chrome.storage.local;
 };
 
 /**
