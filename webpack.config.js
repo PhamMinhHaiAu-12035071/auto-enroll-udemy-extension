@@ -111,6 +111,13 @@ var options = {
           }
         ],
         exclude: /node_modules/
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[hash][ext][query]'
+        }
       }
     ]
   },

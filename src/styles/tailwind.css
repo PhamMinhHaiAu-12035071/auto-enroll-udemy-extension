@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities; 
+
+@layer base {
+    @font-face {
+      font-family: 'Craft Rounded';
+      src: url('../assets/fonts/craft-rounded/CraftRounded-Regular.woff2') format('woff2'),
+           url('../assets/fonts/craft-rounded/CraftRounded-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Craft Rounded';
+      src: url('../assets/fonts/craft-rounded/CraftRounded-Bold.woff2') format('woff2'),
+           url('../assets/fonts/craft-rounded/CraftRounded-Bold.woff') format('woff');
+      font-weight: bold;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Craft Rounded Demi';
+      src: url('../assets/fonts/craft-rounded/CraftRounded-DemiBold.woff2') format('woff2'),
+           url('../assets/fonts/craft-rounded/CraftRounded-DemiBold.woff') format('woff');
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Craft Rounded Cd';
+      src: url('../assets/fonts/craft-rounded/CraftRounded-BoldCondensed.woff2') format('woff2'),
+           url('../assets/fonts/craft-rounded/CraftRounded-BoldCondensed.woff') format('woff');
+      font-weight: bold;
+      font-style: normal;
+    }
+
+    /* Áp dụng font mặc định cho body nếu muốn */
+    body {
+      @apply font-craft;
+    }
+}

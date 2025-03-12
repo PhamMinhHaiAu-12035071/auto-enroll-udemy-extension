@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'Craft Rounded Demi';
+    src: url('CraftRounded-DemiBold.eot');
+    src: local('CraftRounded-DemiBold'),
+        url('CraftRounded-DemiBold.eot?#iefix') format('embedded-opentype'),
+        url('CraftRounded-DemiBold.woff2') format('woff2'),
+        url('CraftRounded-DemiBold.woff') format('woff'),
+        url('CraftRounded-DemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Rounded';
+    src: url('CraftRounded-Regular.eot');
+    src: local('CraftRounded-Regular'),
+        url('CraftRounded-Regular.eot?#iefix') format('embedded-opentype'),
+        url('CraftRounded-Regular.woff2') format('woff2'),
+        url('CraftRounded-Regular.woff') format('woff'),
+        url('CraftRounded-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Rounded Cd';
+    src: url('CraftRounded-BoldCondensed.eot');
+    src: local('CraftRounded-BoldCondensed'),
+        url('CraftRounded-BoldCondensed.eot?#iefix') format('embedded-opentype'),
+        url('CraftRounded-BoldCondensed.woff2') format('woff2'),
+        url('CraftRounded-BoldCondensed.woff') format('woff'),
+        url('CraftRounded-BoldCondensed.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Rounded';
+    src: url('CraftRounded-Bold.eot');
+    src: local('CraftRounded-Bold'),
+        url('CraftRounded-Bold.eot?#iefix') format('embedded-opentype'),
+        url('CraftRounded-Bold.woff2') format('woff2'),
+        url('CraftRounded-Bold.woff') format('woff'),
+        url('CraftRounded-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
