@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import Header from './Header';
-import type { TabType } from './BottomBar';
 import { Coupon, RowCoupon } from '../type';
+import type { TabType } from './BottomBar';
 import BottomBar from './BottomBar';
-import Pager from './Pager';
 import CourseCard from './Course/CourseCard';
-import Button from './Button/Button';
+import Header from './Header';
+import Pager from './Pager';
 
 interface PopupProps {
     rowCoupons: RowCoupon[];

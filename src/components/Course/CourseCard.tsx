@@ -11,6 +11,68 @@ interface CourseCardProps {
     borderRadius?: string | number;
 }
 
+// Component hiển thị hình ảnh khóa học
+const CourseImage: React.FC<{
+    src: string;
+    alt: string;
+    borderRadius: string;
+}> = ({ src, alt, borderRadius }) => {
+    const imageWrapperStyle = {
+        borderRadius,
+        overflow: 'hidden'
+    };
+
+    return (
+        <div style={imageWrapperStyle} className="w-2/5 m-2">
+            <img
+                src={src}
+                alt={alt}
+                className="w-full h-full object-cover"
+            />
+        </div>
+    );
+};
+
+// Component hiển thị tiêu đề khóa học
+const CourseTitle: React.FC<{ title: string }> = ({ title }) => (
+    <h3 className="font-bold text-[var(--color-text)] text-lg truncate font-craft">
+        {title}
+    </h3>
+);
+
+// Component hiển thị đánh giá sao
+const CourseRating: React.FC<{ rating?: number | null; courseId: number }> = ({ rating, courseId }) => {
+    const FaStarIcon = FaStar as React.ElementType;
+
+    if (!rating) return null;
+
+    return (
+        <div className="flex items-center">
+            {[...Array(5)].map((_, index) => (
+                <FaStarIcon
+                    key={`star-${courseId}-${index}`}
+                    size={16}
+                    color={rating > index ? "var(--color-star-active)" : "var(--color-star-inactive)"}
+                />
+            ))}
+        </div>
+    );
+};
+
+// Component hiển thị ngôn ngữ khóa học
+const CourseLanguage: React.FC<{ language?: string | null }> = ({ language }) => (
+    <div className="ml-auto text-[var(--color-text)] text-xs bg-white/20 px-2 py-1 rounded-full font-craft-demi">
+        {language ?? "English"}
+    </div>
+);
+
+// Component hiển thị tác giả khóa học
+const CourseAuthors: React.FC<{ authors?: string[] }> = ({ authors }) => (
+    <p className="text-[var(--color-text)] text-sm opacity-90 font-craft-demi">
+        By {authors?.length ? authors.join(", ") : "Unknown Instructor"}
+    </p>
+);
+
 const CourseCard: React.FC<CourseCardProps> = ({
     id,
     coupon,
@@ -34,54 +96,28 @@ const CourseCard: React.FC<CourseCardProps> = ({
         borderRadius: formattedBorderRadius
     };
 
-    // Style for the image wrapper to match the top part of the card
-    const imageWrapperStyle = {
-        borderRadius: formattedBorderRadius,
-        overflow: 'hidden'
-    };
-
-    const FaStarIcon = FaStar as React.ElementType;
-
     return (
         <div className="course-card font-craft">
             <div className={`pushable`} style={pushableStyle}>
                 <div className={`front flex flex-row`} style={frontStyle}>
-                    <div style={imageWrapperStyle} className="w-2/5 m-2">
-                        <img
-                            src={"https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg"}
-                            alt="Course"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
+                    <CourseImage
+                        src="https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg"
+                        alt={coupon.title || "Course"}
+                        borderRadius={formattedBorderRadius}
+                    />
 
                     <div className="p-4 w-3/5">
-                        <h3 className="font-bold text-[var(--color-text)] text-lg truncate font-craft">
-                            {coupon.title}
-                        </h3>
+                        <CourseTitle title={coupon.title} />
 
                         <div className="flex items-center mt-2">
                             <div className="flex items-center font-craft-demi">
-                                {coupon.rating && (
-                                    <div className="flex items-center">
-                                        {[...Array(5)].map((_, index) => (
-                                            <FaStarIcon
-                                                key={`star-${id}-${index}`}
-                                                size={16}
-                                                color={coupon.rating && coupon.rating > index ? "var(--color-star-active)" : "var(--color-star-inactive)"}
-                                            />
-                                        ))}
-                                    </div>
-                                )}
+                                <CourseRating rating={coupon.rating} courseId={id} />
                             </div>
-                            <div className="ml-auto text-[var(--color-text)] text-xs bg-white/20 px-2 py-1 rounded-full font-craft-demi">
-                                {coupon.language ?? "English"}
-                            </div>
+                            <CourseLanguage language={coupon.language} />
                         </div>
 
                         <div className="mt-3">
-                            <p className="text-[var(--color-text)] text-sm opacity-90 font-craft-demi">
-                                By {coupon.authors?.length ? coupon.authors.join(", ") : "Unknown Instructor"}
-                            </p>
+                            <CourseAuthors authors={coupon.authors} />
                         </div>
                     </div>
                 </div>
@@ -111,7 +147,6 @@ const calculateShadowColor = (color: string): string => {
 // Hàm hỗ trợ làm tối màu cho các định dạng khác
 const darkenColor = (color: string): string => {
     // Đơn giản hóa: trả về màu tối hơn mặc định
-    // Trong thực tế, bạn có thể muốn thêm logic để xử lý các định dạng màu khác (HEX, RGB, v.v.)
     return "hsl(340deg 100% 32%)";
 }
 
