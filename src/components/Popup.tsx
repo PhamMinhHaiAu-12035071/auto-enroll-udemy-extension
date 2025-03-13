@@ -5,6 +5,7 @@ import { RowCoupon } from '../type';
 import BottomBar from './BottomBar';
 import Pager from './Pager';
 import CourseCard from './Course/CourseCard';
+import Button from './Button/Button';
 
 interface PopupProps {
     rowCoupons: RowCoupon[];
@@ -29,7 +30,14 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
 
                 {/* Featured Course Card */}
                 <div className="mb-6">
-                    <CourseCard />
+                    <Button text="Enroll Now" />
+                    <div className="mt-4">
+                        <CourseCard
+                            text="Đăng ký"
+                            backgroundColor="hsl(210deg 100% 47%)"
+                            borderRadius={20}
+                        />
+                    </div>
                 </div>
 
                 {/* Existing rowCoupons list */}
