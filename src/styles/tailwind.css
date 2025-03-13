@@ -49,6 +49,7 @@
   --color-text: rgb(19, 19, 19);
   --color-star-active: rgb(247, 210, 109);
   --color-star-inactive: rgb(128, 128, 128);
+  --color-dark: rgb(54, 58, 58);
 }
 
 [data-theme='dark'] {
@@ -59,4 +60,5 @@
   --color-text: rgb(19, 19, 19);
   --color-star-active: rgb(247, 210, 109);
   --color-star-inactive: rgb(128, 128, 128);
+  --color-dark: rgb(54, 58, 58);
 }

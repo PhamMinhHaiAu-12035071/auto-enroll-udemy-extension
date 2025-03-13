@@ -6,8 +6,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title }) => {
     return (
-        <header className="bg-primary text-black p-4 flex items-center justify-center">
-            <h1 className="text-xl font-craft-demi">{title}</h1>
+        <header className="bg-primary text-black p-4 flex items-center justify-center border-b-2 border-[var(--color-dark)]">
+            <h1 className="text-2xl font-craft-demi">{title}</h1>
         </header>
     );
 };
