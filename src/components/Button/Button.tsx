@@ -31,10 +31,12 @@ const Button: React.FC<ButtonProps> = ({
     };
 
     return (
-        <div className={`pushable`} style={pushableStyle}>
-            <span className={`front`} style={frontStyle}>
-                {text}
-            </span>
+        <div className="app-button">
+            <div className={`pushable`} style={pushableStyle}>
+                <span className={`front`} style={frontStyle}>
+                    {text}
+                </span>
+            </div>
         </div>
     );
 };

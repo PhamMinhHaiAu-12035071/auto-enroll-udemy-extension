@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header';
 import type { TabType } from './BottomBar';
-import { RowCoupon } from '../type';
+import { Coupon, RowCoupon } from '../type';
 import BottomBar from './BottomBar';
 import Pager from './Pager';
 import CourseCard from './Course/CourseCard';
@@ -21,6 +21,37 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
         return tabMap[tab];
     };
 
+    const mockCoupon: Coupon = {
+        "title": "Ethically Hack the Planet Part 2",
+        "link": "https://www.udemy.com/course/ethically-hack-the-planet-part-2/?couponCode=6477CC0EC37AD18BDEC9",
+        "couponCode": "6477CC0EC37AD18BDEC9",
+        "checkTime": "2025-03-12T12:05:31.057Z",
+        "rating": 1,
+        "authors": [
+            "Cyber Twinkle"
+        ],
+        "enrollStudents": 40656,
+        "language": "English",
+        "topics": [
+            "IT & Software",
+            "Network & Security",
+            "Ethical Hacking"
+        ],
+        "price": 399000,
+        "duration": 33,
+        "image": {
+            "src": "https://img-c.udemycdn.com/course/240x135/5523566_a9a6_7.jpg",
+            "srcset": [
+                "https://img-c.udemycdn.com/course/240x135/5523566_a9a6_7.jpg 240w",
+                "https://img-c.udemycdn.com/course/480x270/5523566_a9a6_7.jpg 480w",
+                "https://img-c.udemycdn.com/course/750x422/5523566_a9a6_7.jpg 750w"
+            ],
+            "width": 330,
+            "height": 185
+        },
+        "amountRating": 188
+    };
+
     const renderTabs = () => {
         return [
             // Course Tab
@@ -33,8 +64,9 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
                     <Button text="Enroll Now" />
                     <div className="mt-4">
                         <CourseCard
-                            text="Đăng ký"
-                            backgroundColor="hsl(210deg 100% 47%)"
+                            id={1}
+                            coupon={mockCoupon}
+                            backgroundColor="hsl(345deg 100% 47%)"
                             borderRadius={20}
                         />
                     </div>

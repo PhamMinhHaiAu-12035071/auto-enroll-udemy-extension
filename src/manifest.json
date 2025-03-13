@@ -29,5 +29,5 @@
     }
   ],
   "host_permissions": ["*://*.udemy.com/*"],
-  "permissions": ["tabs", "scripting"]
+  "permissions": ["tabs", "scripting", "storage"]
 }
