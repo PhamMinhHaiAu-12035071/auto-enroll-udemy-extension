@@ -55,35 +55,25 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
     const renderTabs = () => {
         return [
             // Course Tab
-            <div key="course" className="h-full p-4 overflow-y-auto">
+            <div key="course" className="h-full p-4 overflow-y-auto bg-base">
                 <h2 className="text-xl font-bold mb-2">Courses</h2>
                 <p className="text-gray-600 mb-4">Browse available Udemy courses</p>
 
                 {/* Featured Course Card */}
                 <div className="mb-6">
-                    <Button text="Enroll Now" />
                     <div className="mt-4">
-                        <CourseCard
-                            id={1}
-                            coupon={mockCoupon}
-                            backgroundColor="hsl(345deg 100% 47%)"
-                            borderRadius={20}
-                        />
+                        <div className="space-y-4">
+                            {Array.from({ length: 20 }).map((_, index) => (
+                                <CourseCard
+                                    key={`course-${index}`}
+                                    id={index + 1}
+                                    coupon={mockCoupon}
+                                    backgroundColor="hsl(0deg 0% 95%)"
+                                    borderRadius={20}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
-
-                {/* Existing rowCoupons list */}
-                <div className="mt-4">
-                    {rowCoupons.length > 0 ? (
-                        rowCoupons.map((rowCoupon) => (
-                            <div key={rowCoupon.id} className="mb-3 p-3 border rounded-lg shadow-sm">
-                                <h3 className="font-medium">{rowCoupon.coupon.title}</h3>
-                                <p className="text-sm text-gray-500">{rowCoupon.coupon.couponCode}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <p className="text-gray-500">No courses available</p>
-                    )}
                 </div>
             </div>,
             // History Tab
