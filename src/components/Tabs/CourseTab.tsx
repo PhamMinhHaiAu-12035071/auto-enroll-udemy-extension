@@ -14,13 +14,15 @@ const CourseTab: React.FC<CourseTabProps> = ({ mockCoupon }) => {
 
             <div className="mb-6">
                 <div className="mt-4">
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                         {Array.from({ length: 20 }).map((_, index) => (
                             <CourseCard
                                 key={`course-${index}`}
                                 id={index + 1}
                                 coupon={mockCoupon}
-                                backgroundColor="hsl(0deg 0% 95%)"
+                                backgroundColor="hsl(0deg 0% 99.6%)"
+                                shadowColor="hsl(0deg 0% 7.5%)"
+                                borderColor="hsl(0deg 0% 24%)"
                                 borderRadius={20}
                             />
                         ))}

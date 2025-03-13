@@ -9,7 +9,7 @@
     
     &:hover {
       .front {
-        transform: translate(-5px, -5px);
+        transform: translate(-7px, -7px);
         transition:
           transform
           250ms
@@ -19,7 +19,7 @@
     
     &:active {
       .front {
-        transform: translate(-2px, -2px);
+        transform: translate(-3px, -3px);
         transition: transform 34ms;
       }
     }
@@ -40,6 +40,6 @@
       transform
       600ms
       cubic-bezier(.3, .7, .4, 1);
-    transform: translate(-4px, -4px);
+    transform: translate(-6px, -6px);
   }
 }

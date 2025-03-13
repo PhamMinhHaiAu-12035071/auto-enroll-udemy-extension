@@ -9,6 +9,7 @@ interface CourseCardProps {
     backgroundColor?: string;
     shadowColor?: string;
     borderRadius?: string | number;
+    borderColor?: string;
 }
 
 // Component hiển thị hình ảnh khóa học
@@ -78,7 +79,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
     coupon,
     backgroundColor = "hsl(345deg 100% 47%)",
     shadowColor,
-    borderRadius = "12px"
+    borderRadius = "12px",
+    borderColor
 }) => {
     // Tự động tính toán màu shadow nếu không được cung cấp
     const calculatedShadowColor = shadowColor ?? calculateShadowColor(backgroundColor);
@@ -93,7 +95,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
     const frontStyle = {
         background: backgroundColor,
-        borderRadius: formattedBorderRadius
+        borderRadius: formattedBorderRadius,
+        border: borderColor ? `1px solid ${borderColor}` : undefined
     };
 
     return (
