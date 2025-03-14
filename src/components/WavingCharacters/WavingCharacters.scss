@@ -1,0 +1,16 @@
+.waving-characters {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  svg {
+    width: 85%;
+    height: 85%;
+    max-width: 350px;
+    max-height: 340px;
+    object-fit: contain;
+  }
+} 
