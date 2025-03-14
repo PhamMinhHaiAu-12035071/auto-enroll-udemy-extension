@@ -1,8 +1,8 @@
 .app-button {
+  font-family: var(--font-craft);
   .pushable {
     background: hsl(340deg 100% 32%);
     border: none;
-    border-radius: 12px;
     padding: 0;
     cursor: pointer;
     position: relative;
@@ -31,11 +31,11 @@
 
   .front {
     display: block;
-    padding: 12px 42px;
+    padding: 12px 64px;
     border-radius: 12px;
     font-size: 1.25rem;
-    background: hsl(345deg 100% 47%);
-    color: white;
+    background: var(--color-yellow);
+    color: var(--color-dark);
     transition:
       transform
       600ms

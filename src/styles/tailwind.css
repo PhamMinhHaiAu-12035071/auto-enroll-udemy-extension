@@ -50,6 +50,9 @@
   --color-star-active: rgb(247, 210, 109);
   --color-star-inactive: rgb(128, 128, 128);
   --color-dark: rgb(54, 58, 58);
+  --popup-width: 375px;
+  --popup-height: 600px;
+  --color-yellow: rgb(254, 218, 121);
 }
 
 [data-theme='dark'] {
@@ -61,4 +64,7 @@
   --color-star-active: rgb(247, 210, 109);
   --color-star-inactive: rgb(128, 128, 128);
   --color-dark: rgb(54, 58, 58);
+  --popup-width: 375px;
+  --popup-height: 600px;
+  --color-yellow: rgb(254, 218, 121);
 }

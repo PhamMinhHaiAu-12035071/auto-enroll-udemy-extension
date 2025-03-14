@@ -6,16 +6,20 @@ interface ButtonProps {
     backgroundColor?: string;
     shadowColor?: string;
     borderRadius?: string | number;
+    borderColor?: string;
+    onClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
     text = "Push me",
     backgroundColor = "hsl(345deg 100% 47%)",
     shadowColor,
-    borderRadius = "12px"
+    borderRadius = "12px",
+    borderColor = "hsl(345deg 100% 47%)",
+    onClick
 }) => {
     // Tự động tính toán màu shadow nếu không được cung cấp
-    const calculatedShadowColor = shadowColor || calculateShadowColor(backgroundColor);
+    const calculatedShadowColor = shadowColor ?? calculateShadowColor(backgroundColor);
 
     // Chuyển đổi borderRadius thành chuỗi với đơn vị px nếu là số
     const formattedBorderRadius = typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius;
@@ -27,16 +31,22 @@ const Button: React.FC<ButtonProps> = ({
 
     const frontStyle = {
         background: backgroundColor,
-        borderRadius: formattedBorderRadius
+        borderRadius: formattedBorderRadius,
+        border: borderColor ? `1px solid ${borderColor}` : undefined
     };
 
     return (
         <div className="app-button">
-            <div className={`pushable`} style={pushableStyle}>
-                <span className={`front`} style={frontStyle}>
+            <button
+                className={`pushable`}
+                style={pushableStyle}
+                onClick={onClick}
+                type="button"
+            >
+                <span className={`front font-craft-demi`} style={frontStyle}>
                     {text}
                 </span>
-            </div>
+            </button>
         </div>
     );
 };
@@ -45,11 +55,12 @@ const Button: React.FC<ButtonProps> = ({
 const calculateShadowColor = (color: string): string => {
     // Xử lý màu HSL
     if (color.includes('hsl')) {
-        const hslMatch = color.match(/hsl\((\d+)deg\s+(\d+)%\s+(\d+)%\)/);
-        if (hslMatch) {
-            const hue = Math.max(0, parseInt(hslMatch[1]) - 5); // Giảm hue 5 độ
-            const saturation = parseInt(hslMatch[2]); // Giữ nguyên saturation
-            const lightness = Math.max(0, parseInt(hslMatch[3]) - 15); // Giảm lightness 15%
+        const hslRegex = /hsl\((\d+)deg\s+(\d+)%\s+(\d+)%\)/;
+        const match = hslRegex.exec(color);
+        if (match) {
+            const hue = Math.max(0, parseInt(match[1]) - 5);
+            const saturation = parseInt(match[2]);
+            const lightness = Math.max(0, parseInt(match[3]) - 15);
             return `hsl(${hue}deg ${saturation}% ${lightness}%)`;
         }
     }

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { RowCoupon } from '../type';
-import type { TabType } from './BottomBar';
-import BottomBar from './BottomBar';
-import Header from './Header';
-import Pager from './Pager';
-import CourseTab from './Tabs/CourseTab';
-import HistoryTab from './Tabs/HistoryTab';
-import AnalysisTab from './Tabs/AnalysisTab';
+import { Coupon, RowCoupon } from '../../type';
+import type { TabType } from '../../components/BottomBar';
+import BottomBar from '../../components/BottomBar';
+import Header from '../../components/Header';
+import Pager from '../../components/Pager';
+import CourseTab from '../../components/Tabs/CourseTab';
+import HistoryTab from '../../components/Tabs/HistoryTab';
+import AnalysisTab from '../../components/Tabs/AnalysisTab';
 
-interface PopupProps {
-    rowCoupons: RowCoupon[];
+interface HomeProps {
+    coupons: Coupon[];
     isLoading: boolean;
     error: string | null;
 }
 
-const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
+const Home: React.FC<HomeProps> = () => {
     const [currentTab, setCurrentTab] = useState<TabType>('course');
 
     const getTabIndex = (tab: TabType): number => {
@@ -59,8 +59,8 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
         <AnalysisTab key="analysis" />
     ];
 
-    if (isLoading) return <div className="p-4">Loading...</div>;
-    if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
+    // if (isLoading) return <div className="p-4">Loading...</div>;
+    // if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
     return (
         <div className="relative h-[500px] w-[350px] bg-base flex flex-col">
@@ -79,4 +79,4 @@ const Popup: React.FC<PopupProps> = ({ rowCoupons, isLoading, error }) => {
     );
 };
 
-export default Popup;
+export default Home;
