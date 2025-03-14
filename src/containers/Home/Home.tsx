@@ -63,7 +63,7 @@ const Home: React.FC<HomeProps> = () => {
     // if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
     return (
-        <div className="relative h-[500px] w-[350px] bg-base flex flex-col">
+        <div className="relative w-[var(--popup-width)] h-[var(--popup-height)] bg-base flex flex-col">
             <Header title="Udemy Auto Enroll" />
 
             <main className="flex-1 h-0">
@@ -72,7 +72,7 @@ const Home: React.FC<HomeProps> = () => {
                 </Pager>
             </main>
 
-            <div className="fixed bottom-0 left-0 right-0 w-[350px]">
+            <div className="fixed bottom-0 left-0 right-0 w-[var(--popup-width)]">
                 <BottomBar defaultTab="course" onTabChange={setCurrentTab} />
             </div>
         </div>

@@ -20,7 +20,7 @@ const AddCoursePage = ({ onNavigate }: AddCoursePageProps) => {
                     className="w-80 h-80 object-contain"
                 />
                 <Button
-                    text="Add my course"
+                    text="Add Tan's course"
                     backgroundColor="var(--color-yellow)"
                     shadowColor="hsl(0deg 0% 7.5%)"
                     borderColor="hsl(0deg 0% 24%)"

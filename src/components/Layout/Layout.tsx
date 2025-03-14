@@ -11,9 +11,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => (
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -100 }}
         transition={{
-            type: "spring",
-            stiffness: 260,
-            damping: 20,
+            type: "tween",
+            duration: 0.25,
+            ease: "easeInOut"
         }}
         className="w-full h-full"
     >
