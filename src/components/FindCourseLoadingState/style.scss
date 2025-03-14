@@ -1,0 +1,91 @@
+.app-find-course-loading-state {
+    font-family: var(--font-craft);
+    
+    .pushable {
+      background: var(--color-dark);
+      border-radius: 24px;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &:focus:not(:focus-visible) {
+        outline: none;
+      }
+    }
+  
+    .front {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 12px 28px 12px;
+      border-radius: 24px;
+      font-size: 1.25rem;
+      background: var(--color-yellow);
+      color: var(--color-dark);
+      transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+      transform: translate(-6px, -6px);
+      width: 100%;
+      text-align: center;
+      border: 1px solid var(--color-dark);
+    }
+
+    .loading-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 24px;
+        position: relative;
+    }
+    
+    .loading-dots-container {
+        display: inline-flex;
+        margin-left: 4px;
+        height: 24px;
+        align-items: center;
+    }
+    
+    .motion-dot {
+        display: inline-block;
+        margin: 0 2px;
+        font-weight: bold;
+        font-size: 1.5rem;
+        line-height: 0;
+        position: relative;
+        margin-top: -3px;
+    }
+
+    .find-course-image {
+      width: 75px;
+      height: 60px;
+      perspective: 500px;
+      transform-style: preserve-3d;
+      position: relative;
+      
+      .shadow-element {
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 12px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+        filter: blur(4px);
+        z-index: -1;
+      }
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.3));
+        background-color: transparent;
+        transform-origin: center center;
+        will-change: transform;
+        position: relative;
+        z-index: 1;
+      }
+    }
+}
