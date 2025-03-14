@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Coupon, RowCoupon } from '../../type';
 import type { TabType } from '../../components/BottomBar';
 import BottomBar from '../../components/BottomBar';
 import Header from '../../components/Header';
 import Pager from '../../components/Pager';
+import AnalysisTab from '../../components/Tabs/AnalysisTab';
 import CourseTab from '../../components/Tabs/CourseTab';
 import HistoryTab from '../../components/Tabs/HistoryTab';
-import AnalysisTab from '../../components/Tabs/AnalysisTab';
+import { Coupon } from '../../type';
 
 interface HomeProps {
     coupons: Coupon[];
@@ -15,7 +15,7 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = () => {
-    const [currentTab, setCurrentTab] = useState<TabType>('course');
+    const [currentTab, setCurrentTab] = useState<TabType>('history');
 
     const getTabIndex = (tab: TabType): number => {
         const tabMap = { course: 0, history: 1, analysis: 2 };
@@ -73,7 +73,7 @@ const Home: React.FC<HomeProps> = () => {
             </main>
 
             <div className="fixed bottom-0 left-0 right-0 w-[var(--popup-width)]">
-                <BottomBar defaultTab="course" onTabChange={setCurrentTab} />
+                <BottomBar defaultTab={currentTab} onTabChange={setCurrentTab} />
             </div>
         </div>
     );

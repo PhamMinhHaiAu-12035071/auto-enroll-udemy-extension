@@ -1,5 +1,10 @@
-import React from "react";
 import { motion } from "framer-motion";
+import React, { Children, isValidElement } from "react";
+import { nanoid } from "nanoid";
+
+const generateKey = (child: React.ReactNode) => {
+    return isValidElement(child) && child.key !== null ? child.key : nanoid();
+};
 
 interface PagerProps {
     children: React.ReactNode;
@@ -19,16 +24,25 @@ const Pager: React.FC<PagerProps> = ({ children, value }) => {
                 initial={false}
                 animate={{ x: value * -100 + "%" }}
             >
-                {React.Children.map(children, (child, i) => (
-                    <div
-                        key={i}
-                        className="flex flex-col w-full self-stretch justify-start flex-shrink-0 h-full overflow-hidden outline-none"
-                        aria-hidden={value !== i}
-                        tabIndex={value === i ? 0 : -1}
-                    >
-                        {child}
-                    </div>
-                ))}
+                {Children.map(children, (child, i) => {
+                    if (!isValidElement(child) || child.key === null) {
+                        console.warn(
+                            `Child at position ${i} in Pager does not have a key. ` +
+                            `All children of Pager must have explicit keys.`
+                        );
+                    }
+
+                    return (
+                        <div
+                            key={generateKey(child)}
+                            className="flex flex-col w-full self-stretch justify-start flex-shrink-0 h-full overflow-hidden outline-none"
+                            aria-hidden={value !== i}
+                            tabIndex={value === i ? 0 : -1}
+                        >
+                            {child}
+                        </div>
+                    );
+                })}
             </motion.div>
         </div>
     );
