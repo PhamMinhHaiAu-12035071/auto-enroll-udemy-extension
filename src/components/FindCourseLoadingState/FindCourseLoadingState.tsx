@@ -2,8 +2,40 @@ import React, { useEffect, useRef } from 'react';
 import './style.scss';
 import findCourse from '../../assets/img/find-course.svg';
 import gsap from 'gsap';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
+// Card container animation variants
+const cardContainerVariants = {
+    hidden: {
+        opacity: 0,
+        y: 70, // Tăng khoảng cách ban đầu để hiệu ứng rõ hơn
+        scale: 0, // Bắt đầu với kích thước 0
+        transformOrigin: "center bottom" // Xác định điểm gốc cho scale
+    },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1, // Phình to dần đến kích thước đầy đủ
+        transition: {
+            type: 'spring',
+            damping: 20,
+            stiffness: 150, // Giảm stiffness thêm chút nữa để hiệu ứng scale mượt mà hơn
+            duration: 1.5, // Tăng thời gian để nhìn rõ cả 3 hiệu ứng
+            ease: [0.16, 1, 0.3, 1],
+            // Thứ tự animation: scale trước, y tiếp theo, opacity chạy song song
+            scale: { duration: 1.5, ease: [0, 1, 0.5, 1] }, // Custom timing cho scale
+        }
+    },
+    exit: {
+        opacity: 0,
+        y: -20,
+        scale: 0.9, // Thêm hiệu ứng thu nhỏ khi biến mất
+        transition: {
+            duration: 0.5,
+            ease: 'easeOut'
+        }
+    }
+};
 
 // Variants cho dot đầu tiên - xuất hiện trước
 const firstDotVariants = {
@@ -115,46 +147,53 @@ const FindCourseLoadingState = () => {
         };
     }, []);
 
-
     return (
-        <div className="app-find-course-loading-state">
-            <div className={`pushable`}>
-                <span className={`front font-craft-demi`}>
-                    <div className="loading-text">
-                        {`Bot is looking for courses`}
-                        <div className="loading-dots-container">
-                            <motion.span
-                                className="motion-dot"
-                                initial="initial"
-                                animate="animate"
-                                variants={firstDotVariants}
-                            >.</motion.span>
-                            <motion.span
-                                className="motion-dot"
-                                initial="initial"
-                                animate="animate"
-                                variants={secondDotVariants}
-                            >.</motion.span>
-                            <motion.span
-                                className="motion-dot"
-                                initial="initial"
-                                animate="animate"
-                                variants={thirdDotVariants}
-                            >.</motion.span>
+        <AnimatePresence>
+            <motion.div
+                className="app-find-course-loading-state"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={cardContainerVariants}
+            >
+                <div className={`pushable`}>
+                    <span className={`front font-craft-demi`}>
+                        <div className="loading-text">
+                            {`Bot is looking for courses`}
+                            <div className="loading-dots-container">
+                                <motion.span
+                                    className="motion-dot"
+                                    initial="initial"
+                                    animate="animate"
+                                    variants={firstDotVariants}
+                                >.</motion.span>
+                                <motion.span
+                                    className="motion-dot"
+                                    initial="initial"
+                                    animate="animate"
+                                    variants={secondDotVariants}
+                                >.</motion.span>
+                                <motion.span
+                                    className="motion-dot"
+                                    initial="initial"
+                                    animate="animate"
+                                    variants={thirdDotVariants}
+                                >.</motion.span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="find-course-image">
-                        <div className="shadow-element"></div>
-                        <img
-                            ref={svgRef}
-                            src={findCourse}
-                            alt="findCourse"
-                            style={{ backgroundColor: 'transparent' }}
-                        />
-                    </div>
-                </span>
-            </div>
-        </div>
+                        <div className="find-course-image">
+                            <div className="shadow-element"></div>
+                            <img
+                                ref={svgRef}
+                                src={findCourse}
+                                alt="findCourse"
+                                style={{ backgroundColor: 'transparent' }}
+                            />
+                        </div>
+                    </span>
+                </div>
+            </motion.div>
+        </AnimatePresence>
     );
 };
 export default FindCourseLoadingState;
