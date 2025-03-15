@@ -14,6 +14,10 @@ export enum BottomTab {
   ANALYTICS = 'analytics',
 }
 
+export interface NavigationParams {
+  fromScreen?: Screen;
+}
+
 // Interface for router state
 interface RouterState {
   currentScreen: Screen;
@@ -23,7 +27,8 @@ interface RouterState {
 // Default router state values
 const DEFAULT_ROUTER_STATE = {
   currentScreen: Screen.INITIAL,
-  activeBottomTab: BottomTab.INITIAL
+  activeBottomTab: BottomTab.INITIAL,
+  navigationParams: {}
 };
 
 /**
@@ -39,6 +44,7 @@ export const getInitialRouterState = async (): Promise<RouterState> => {
 export const PersistentRouterModel = types.model('PersistentRouter', {
   currentScreen: types.enumeration('Screen', Object.values(Screen)),
   activeBottomTab: types.enumeration('BottomTab', Object.values(BottomTab)),
+  navigationParams: types.optional(types.frozen<NavigationParams>(), {})
 })
 .views(self => ({
   get defaultScreen() {
@@ -52,7 +58,7 @@ export const PersistentRouterModel = types.model('PersistentRouter', {
       currentScreen: self.currentScreen,
       activeBottomTab: self.activeBottomTab
     };
-    CacheSessionService.set(SESSION_CACHE_KEYS.NAVIGATION_STATE, routerState);
+    CacheSessionService.set<RouterState>(SESSION_CACHE_KEYS.NAVIGATION_STATE, routerState);
   };
 
   return {
@@ -64,6 +70,10 @@ export const PersistentRouterModel = types.model('PersistentRouter', {
     setActiveBottomTab(tab: BottomTab) {
       self.activeBottomTab = tab;
       cacheRouterState();
+    },
+
+    setNavigationParams(params: NavigationParams) {
+      self.navigationParams = params;
     },
     
     reset() {

@@ -6,8 +6,7 @@ import BeginVisitUdemy from '../BeginVisitUdemy/BeginVisitUdemy';
 import CardSharedAnimation from '../CardSharedAnimation';
 import FindCourseLoadingState from '../FindCourseLoadingState/FindCourseLoadingState';
 import PullCourseState from '../PullCourseState/PullCourseState';
-import { UdemyMessageAction } from '../../services/udemy/types';
-
+import { Screen } from '../../models/PersistentRouterModel';
 const HistoryTab: React.FC = observer(() => {
 
     return (
@@ -22,6 +21,11 @@ const HistoryTab: React.FC = observer(() => {
 const FindCourseLoadingStateCardAnimation = observer(() => {
     const store = getStore();
     const isVisible = store.history.currentStep === HistoryStep.FIND_COURSE;
+    // React.useEffect(() => {
+    //     if (store.history.currentStep === HistoryStep.FIND_COURSE && store.couponStore.items.length === 0) {
+    //         store.couponStore.fetchCoupons();
+    //     }
+    // }, [store]);
     return (
         <CardSharedAnimation
             className='absolute top-40 left-0 w-full h-full px-6'
@@ -35,6 +39,13 @@ const FindCourseLoadingStateCardAnimation = observer(() => {
 const PullCourseStateCardAnimation = observer(() => {
     const store = getStore();
     const isVisible = store.history.currentStep === HistoryStep.PULL_COURSE;
+    React.useEffect(() => {
+        if (isVisible) {
+            setTimeout(() => {
+                store.history.autoTransitionStepUdemy(store.couponStore.items);
+            }, 3_000);
+        }
+    }, [isVisible]);
     return (
         <CardSharedAnimation
             className='absolute top-40 left-0 w-full h-full px-6'

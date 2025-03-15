@@ -1,21 +1,21 @@
-import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { NavigationParams } from "../Root/RootContainer";
-import Home from "./Home";
+import React, { useEffect } from "react";
 import { useStore } from "../../hooks/useStore";
-import { Screen } from "../../models/PersistentRouterModel";
+import { NavigationParams, Screen } from "../../models/PersistentRouterModel";
+import Home from "./Home";
 
 interface HomeContainerProps {
     navigateTo: (screen: Screen, params?: NavigationParams) => void;
-    params: NavigationParams;
 }
 
-const HomeContainer: React.FC<HomeContainerProps> = observer(({ navigateTo, params }) => {
+const HomeContainer: React.FC<HomeContainerProps> = observer(({ navigateTo }) => {
     const store = useStore();
 
     useEffect(() => {
-        store.fetchCoupons();
-    }, [store]);
+        if (store.persistentRouter.navigationParams.fromScreen === Screen.ADD_COURSE) {
+            store.couponStore.fetchCoupons();
+        }
+    }, [store, store.persistentRouter.navigationParams.fromScreen]);
 
     return (
         <Home />

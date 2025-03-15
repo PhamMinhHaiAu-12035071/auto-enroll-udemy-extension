@@ -4,7 +4,7 @@ import CourseCard from '../Course/CourseCard';
 
 const CourseTab: React.FC = () => {
     const store = useStore();
-    const coupons = store.coupons;
+    const coupons = store.couponStore.items;
     return (
         <div className="h-full p-4 overflow-y-auto bg-base">
             <h2 className="text-xl font-bold mb-2">Courses</h2>

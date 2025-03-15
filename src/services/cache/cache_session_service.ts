@@ -116,5 +116,7 @@ export class CacheSessionService {
 
 // Specific session cache keys for the application
 export const SESSION_CACHE_KEYS = {
-    NAVIGATION_STATE: 'navigationStateSession'
+    NAVIGATION_STATE: 'navigationStateSession',
+    HISTORY_STATE: 'historyStateSession',
+    COUPONS: 'couponsSession'
 };
