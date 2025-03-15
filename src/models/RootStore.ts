@@ -4,6 +4,7 @@ import { CacheService, CACHE_KEYS } from '../services/cache/cache_service';
 import { RowCoupon } from '../type';
 import { CouponModel, ICoupon } from './CouponModel';
 import { HistoryModel, HistoryStep } from './HistoryModel';
+import { BottomTab, PersistentRouterModel, Screen } from './PersistentRouterModel'
 
 // Thời gian cache tính bằng milliseconds (3 ngày)
 const CACHE_DURATION = 3 * 24 * 60 * 60 * 1000;
@@ -14,7 +15,8 @@ export const RootStore = types
     coupons: types.array(CouponModel),
     isFetching: types.optional(types.boolean, false),
     error: types.maybeNull(types.string),
-    history: types.optional(HistoryModel, { currentStep: HistoryStep.INITIAL })
+    history: types.optional(HistoryModel, { currentStep: HistoryStep.INITIAL }),
+    persistentRouter: types.optional(PersistentRouterModel, {currentScreen: Screen.INITIAL, activeBottomTab: BottomTab.INITIAL})
   })
   .actions(self => ({
     setCoupons(coupons: ICoupon[]) {
@@ -87,7 +89,8 @@ export function initializeStore() {
     coupons: [],
     isFetching: true,
     error: null,
-    history: { currentStep: HistoryStep.INITIAL }
+    history: { currentStep: HistoryStep.INITIAL },
+    persistentRouter: { currentScreen: Screen.INITIAL, activeBottomTab: BottomTab.INITIAL }
   });
   
   return _store;

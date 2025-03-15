@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { NavigationParams, PageType } from "../Root/RootContainer";
+import { NavigationParams } from "../Root/RootContainer";
 import Home from "./Home";
 import { useStore } from "../../hooks/useStore";
+import { Screen } from "../../models/PersistentRouterModel";
 
 interface HomeContainerProps {
-    navigateTo: (page: PageType, params?: NavigationParams) => void;
+    navigateTo: (screen: Screen, params?: NavigationParams) => void;
     params: NavigationParams;
 }
 

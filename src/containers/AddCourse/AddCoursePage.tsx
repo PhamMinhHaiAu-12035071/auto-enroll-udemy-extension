@@ -1,20 +1,21 @@
 import React from "react";
 import Button from "../../components/Button/Button";
 import Header from "../../components/Header";
-import { PageType, NavigationParams } from "../Root/RootContainer";
+import { NavigationParams } from "../Root/RootContainer";
 import WavingCharacters from "../../components/WavingCharacters/WavingCharacters";
 import CardWarning from "../../components/CardWarning/CardWarning";
+import { Screen } from "../../models/PersistentRouterModel";
 
 interface AddCoursePageProps {
-    navigateTo: (page: PageType, params?: NavigationParams) => void;
+    navigateTo: (screen: Screen, params?: NavigationParams) => void;
     params: NavigationParams;
 }
 
 const AddCoursePage: React.FC<AddCoursePageProps> = ({ navigateTo, params }) => {
     const handleAddCourse = () => {
         // Ví dụ truyền params khi chuyển màn hình
-        navigateTo("home", {
-            fromScreen: "addCourse",
+        navigateTo(Screen.HOME, {
+            fromScreen: Screen.ADD_COURSE,
         });
     };
 

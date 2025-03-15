@@ -48,13 +48,13 @@ const PullCourseStateCardAnimation = observer(() => {
 const BeginVisitUdemyCardAnimation = observer(() => {
     const store = getStore();
     const isVisible = store.history.currentStep === HistoryStep.GO_TO_UDEMY;
-    React.useEffect(() => {
-        if (isVisible) {
-            setTimeout(() => {
-                chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupon: store.coupons[0] });
-            }, 3_000);
-        }
-    }, [isVisible, store.coupons]);
+    // React.useEffect(() => {
+    //     if (isVisible) {
+    //         setTimeout(() => {
+    //             chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupon: store.coupons[0] });
+    //         }, 3_000);
+    //     }
+    // }, [isVisible, store.coupons]);
     return (
         <CardSharedAnimation
             className='absolute top-40 left-0 w-full h-full px-6'
