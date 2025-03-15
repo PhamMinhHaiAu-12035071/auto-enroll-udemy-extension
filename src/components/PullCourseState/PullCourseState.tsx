@@ -49,7 +49,7 @@ const containerVariants = {
 const PullCourseState: React.FC<PullCourseStateProps> = ({
     coursesCount = 1280,
     isVisible = true,
-    className = ""
+    className = "",
 }) => {
     // Tạo refs cho các đường bay
     const speedLineRefs = useRef<SVGPathElement[]>([]);

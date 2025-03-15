@@ -24,7 +24,7 @@ const HistoryTab: React.FC = observer(() => {
 
     return (
         <div className="h-full bg-base py-24 px-4">
-            <FindCourseLoadingState isVisible={store.isFetching} />
+            <FindCourseLoadingState isVisible={store.isFetching} message="Search courses" />
             <PullCourseState isVisible={showPullState} coursesCount={1280} />
         </div>
     );

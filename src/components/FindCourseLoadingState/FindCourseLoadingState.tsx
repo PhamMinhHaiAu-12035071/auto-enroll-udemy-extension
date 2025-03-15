@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface FindCourseLoadingStateProps {
     isVisible: boolean;
-    message?: string;
+    message: string;
     className?: string;
 }
 
@@ -92,7 +92,7 @@ const thirdDotVariants = {
 
 const FindCourseLoadingState: React.FC<FindCourseLoadingStateProps> = ({
     isVisible,
-    message = "Finding courses...",
+    message,
     className = ""
 }) => {
     const svgRef = useRef<HTMLImageElement>(null);
