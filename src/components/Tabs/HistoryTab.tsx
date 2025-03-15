@@ -7,7 +7,7 @@ const HistoryTab: React.FC = () => {
         <div className="h-full bg-base py-24 px-4">
             <FindCourseLoadingState />
             <div className="mt-4"></div>
-            <PullCourseState />
+            <PullCourseState coursesCount={1280} />
         </div>
     );
 };

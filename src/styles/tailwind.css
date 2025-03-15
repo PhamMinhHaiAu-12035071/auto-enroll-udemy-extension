@@ -53,6 +53,7 @@
   --popup-width: 375px;
   --popup-height: 600px;
   --color-yellow: rgb(254, 218, 121);
+  --color-off-white: rgb(253, 253, 253);
 }
 
 [data-theme='dark'] {
@@ -67,4 +68,5 @@
   --popup-width: 375px;
   --popup-height: 600px;
   --color-yellow: rgb(254, 218, 121);
+  --color-off-white: rgb(253, 253, 253);
 }
