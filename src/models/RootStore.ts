@@ -1,10 +1,10 @@
-import { types, Instance, flow } from 'mobx-state-tree';
+import { Instance, flow, types } from 'mobx-state-tree';
+import { CACHE_KEYS, CacheService } from '../services/cache/cache_service';
 import { SupabaseService } from '../services/superbase/superbase_service';
-import { CacheService, CACHE_KEYS } from '../services/cache/cache_service';
 import { RowCoupon } from '../type';
 import { CouponModel, ICoupon } from './CouponModel';
 import { HistoryModel, HistoryStep } from './HistoryModel';
-import { BottomTab, PersistentRouterModel, Screen } from './PersistentRouterModel'
+import { BottomTab, PersistentRouterModel, Screen, getInitialRouterState } from './PersistentRouterModel';
 
 // Thời gian cache tính bằng milliseconds (3 ngày)
 const CACHE_DURATION = 3 * 24 * 60 * 60 * 1000;
@@ -27,7 +27,11 @@ export const RootStore = types
     },
     setError(error: string | null) {
       self.error = error;
-    }
+    },
+    initializeFromCache: flow(function* () {
+      // Load router state from cache
+      yield self.persistentRouter.loadFromCache();
+    })
   }))
   .actions(self => ({
     // Sử dụng flow để xử lý async actions
@@ -84,6 +88,7 @@ export interface IRootStore extends Instance<typeof RootStore> {}
 // Tạo instance của store
 let _store: IRootStore | undefined;
 
+// Initialize store with default values first, then load from cache
 export function initializeStore() {
   _store = RootStore.create({
     coupons: [],
@@ -93,12 +98,39 @@ export function initializeStore() {
     persistentRouter: { currentScreen: Screen.INITIAL, activeBottomTab: BottomTab.INITIAL }
   });
   
+  // Load cached router state after initialization
+  _store.initializeFromCache();
+  
+  return _store;
+}
+
+// Alternative async initialization that waits for cache before creating store
+export async function initializeStoreAsync() {
+  // Get cached router state
+  const initialRouterState = await getInitialRouterState();
+  
+  _store = RootStore.create({
+    coupons: [],
+    isFetching: true,
+    error: null,
+    history: { currentStep: HistoryStep.INITIAL },
+    persistentRouter: initialRouterState
+  });
+  
   return _store;
 }
 
 export function getStore() {
   if (!_store) {
     _store = initializeStore();
+  }
+  return _store;
+}
+
+// For asynchronous initialization
+export async function getStoreAsync() {
+  if (!_store) {
+    _store = await initializeStoreAsync();
   }
   return _store;
 }

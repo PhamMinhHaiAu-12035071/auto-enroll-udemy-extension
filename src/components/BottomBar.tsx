@@ -6,9 +6,10 @@ export type TabType = 'course' | 'history' | 'analysis';
 interface BottomBarProps {
     defaultTab?: TabType;
     onTabChange?: (tab: TabType) => void;
+    restrictToDefaultTab?: boolean;
 }
 
-const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'course', onTabChange }) => {
+const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'history', onTabChange, restrictToDefaultTab = true }) => {
     const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
     const tabsContainerRef = useRef<HTMLDivElement>(null);
     const [indicatorStyle, setIndicatorStyle] = useState({
@@ -17,6 +18,10 @@ const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'course', onTabChang
     });
 
     const handleTabClick = (tab: TabType) => {
+        if (restrictToDefaultTab && tab !== defaultTab) {
+            return;
+        }
+
         setActiveTab(tab);
         if (onTabChange) {
             onTabChange(tab);
@@ -46,6 +51,13 @@ const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'course', onTabChang
         }
     }, [activeTab]);
 
+    // Ensure active tab matches default tab in restricted mode
+    useEffect(() => {
+        if (restrictToDefaultTab && activeTab !== defaultTab) {
+            setActiveTab(defaultTab);
+        }
+    }, [restrictToDefaultTab, defaultTab]);
+
     return (
         <div className="w-full bg-primary h-[56px] flex items-center">
             <div
@@ -63,22 +75,26 @@ const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'course', onTabChang
 
                 {tabs.map((tab) => {
                     const isActive = activeTab === tab.id;
+                    const isDisabled = restrictToDefaultTab && tab.id !== defaultTab;
 
                     return (
                         <button
                             key={tab.id}
                             data-tab={tab.id}
                             onClick={() => handleTabClick(tab.id as TabType)}
+                            disabled={isDisabled}
                             className={`
                                 relative z-10 flex items-center justify-center h-[40px] rounded-full transition-colors duration-300
                                 flex-1 text-center font-craft-demi
                                 ${isActive ? 'text-white' : 'text-inactive hover:text-white/90'}
+                                ${isDisabled ? 'opacity-40 cursor-not-allowed hover:text-inactive' : ''}
                             `}
                         >
                             <div className="flex items-center justify-center">
                                 <div
                                     className={`transition-transform duration-[350ms] ease-in-out 
                                         ${isActive ? '-translate-x-1 text-white' : 'translate-x-0 text-inactive'}
+                                        ${isDisabled ? 'text-inactive/50' : ''}
                                     `}
                                 >
                                     {tab.icon}
@@ -86,6 +102,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'course', onTabChang
                                 <span
                                     className={`text-sm whitespace-nowrap overflow-hidden transition-all duration-[350ms] ease-in-out 
                                         ${isActive ? 'opacity-100 max-w-[200px] ml-1' : 'opacity-0 ml-0 max-w-0'}
+                                        ${isDisabled ? 'opacity-40' : ''}
                                     `}
                                 >
                                     {tab.label}
