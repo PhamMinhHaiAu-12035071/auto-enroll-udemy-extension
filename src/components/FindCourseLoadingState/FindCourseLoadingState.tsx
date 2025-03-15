@@ -4,35 +4,44 @@ import findCourse from '../../assets/img/find-course.svg';
 import gsap from 'gsap';
 import { motion, AnimatePresence } from 'framer-motion';
 
+interface FindCourseLoadingStateProps {
+    isVisible: boolean;
+    message?: string;
+    className?: string;
+}
+
 // Card container animation variants
 const cardContainerVariants = {
     hidden: {
         opacity: 0,
-        y: 70, // Tăng khoảng cách ban đầu để hiệu ứng rõ hơn
-        scale: 0, // Bắt đầu với kích thước 0
-        transformOrigin: "center bottom" // Xác định điểm gốc cho scale
+        y: 70,
+        scale: 0,
+        transformOrigin: "center bottom"
     },
     visible: {
         opacity: 1,
         y: 0,
-        scale: 1, // Phình to dần đến kích thước đầy đủ
+        scale: 1,
         transition: {
             type: 'spring',
             damping: 20,
-            stiffness: 150, // Giảm stiffness thêm chút nữa để hiệu ứng scale mượt mà hơn
-            duration: 1.5, // Tăng thời gian để nhìn rõ cả 3 hiệu ứng
+            stiffness: 150,
+            duration: 1.5,
             ease: [0.16, 1, 0.3, 1],
-            // Thứ tự animation: scale trước, y tiếp theo, opacity chạy song song
-            scale: { duration: 1.5, ease: [0, 1, 0.5, 1] }, // Custom timing cho scale
+            scale: { duration: 1.5, ease: [0, 1, 0.5, 1] },
         }
     },
     exit: {
         opacity: 0,
-        y: -20,
-        scale: 0.9, // Thêm hiệu ứng thu nhỏ khi biến mất
+        y: -30,
+        scale: 0.5,
+        transformOrigin: "center center",
         transition: {
-            duration: 0.5,
-            ease: 'easeOut'
+            duration: 0.7,
+            ease: [0.43, 0.13, 0.23, 0.96], // Custom easing for smoother exit
+            opacity: { duration: 0.5 }, // Fade out slightly faster
+            scale: { duration: 0.6 }, // Scale slightly slower for better effect
+            y: { duration: 0.5, ease: "easeInOut" } // Custom easing for y movement
         }
     }
 };
@@ -81,7 +90,11 @@ const thirdDotVariants = {
     }
 };
 
-const FindCourseLoadingState = () => {
+const FindCourseLoadingState: React.FC<FindCourseLoadingStateProps> = ({
+    isVisible,
+    message = "Finding courses...",
+    className = ""
+}) => {
     const svgRef = useRef<HTMLImageElement>(null);
 
     useEffect(() => {
@@ -149,51 +162,54 @@ const FindCourseLoadingState = () => {
 
     return (
         <AnimatePresence>
-            <motion.div
-                className="app-find-course-loading-state"
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                variants={cardContainerVariants}
-            >
-                <div className={`pushable`}>
-                    <span className={`front font-craft-demi`}>
-                        <div className="loading-text">
-                            {`Bot is looking for courses`}
-                            <div className="loading-dots-container">
-                                <motion.span
-                                    className="motion-dot"
-                                    initial="initial"
-                                    animate="animate"
-                                    variants={firstDotVariants}
-                                >.</motion.span>
-                                <motion.span
-                                    className="motion-dot"
-                                    initial="initial"
-                                    animate="animate"
-                                    variants={secondDotVariants}
-                                >.</motion.span>
-                                <motion.span
-                                    className="motion-dot"
-                                    initial="initial"
-                                    animate="animate"
-                                    variants={thirdDotVariants}
-                                >.</motion.span>
+            {isVisible && (
+                <motion.div
+                    className={`app-find-course-loading-state ${className}`}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={cardContainerVariants}
+                >
+                    <div className={`pushable`}>
+                        <span className={`front font-craft-demi`}>
+                            <div className="loading-text">
+                                {message}
+                                <div className="loading-dots-container">
+                                    <motion.span
+                                        className="motion-dot"
+                                        initial="initial"
+                                        animate="animate"
+                                        variants={firstDotVariants}
+                                    >.</motion.span>
+                                    <motion.span
+                                        className="motion-dot"
+                                        initial="initial"
+                                        animate="animate"
+                                        variants={secondDotVariants}
+                                    >.</motion.span>
+                                    <motion.span
+                                        className="motion-dot"
+                                        initial="initial"
+                                        animate="animate"
+                                        variants={thirdDotVariants}
+                                    >.</motion.span>
+                                </div>
                             </div>
-                        </div>
-                        <div className="find-course-image">
-                            <div className="shadow-element"></div>
-                            <img
-                                ref={svgRef}
-                                src={findCourse}
-                                alt="findCourse"
-                                style={{ backgroundColor: 'transparent' }}
-                            />
-                        </div>
-                    </span>
-                </div>
-            </motion.div>
+                            <div className="find-course-image">
+                                <div className="shadow-element"></div>
+                                <img
+                                    ref={svgRef}
+                                    src={findCourse}
+                                    alt="findCourse"
+                                    style={{ backgroundColor: 'transparent' }}
+                                />
+                            </div>
+                        </span>
+                    </div>
+                </motion.div>
+            )}
         </AnimatePresence>
     );
 };
+
 export default FindCourseLoadingState;

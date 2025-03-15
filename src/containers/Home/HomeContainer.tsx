@@ -17,7 +17,7 @@ const HomeContainer: React.FC<HomeContainerProps> = observer(({ navigateTo, para
     }, [store]);
 
     return (
-        <Home coupons={store.coupons} isLoading={store.isLoading} error={store.error} />
+        <Home />
     );
 });
 

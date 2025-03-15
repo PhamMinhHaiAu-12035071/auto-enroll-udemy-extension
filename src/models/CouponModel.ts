@@ -39,15 +39,15 @@ export interface ICoupon extends Instance<typeof CouponModel> {}
 export const RootStore = types
   .model('RootStore', {
     coupons: types.array(CouponModel),
-    isLoading: types.optional(types.boolean, false),
+    isFetching: types.optional(types.boolean, false),
     error: types.maybeNull(types.string)
   })
   .actions(self => ({
     setCoupons(coupons: ICoupon[]) {
       self.coupons.replace(coupons);
     },
-    setLoading(loading: boolean) {
-      self.isLoading = loading;
+    setFetching(fetching: boolean) {
+      self.isFetching = fetching;
     },
     setError(error: string | null) {
       self.error = error;
@@ -56,7 +56,7 @@ export const RootStore = types
   .actions(self => ({
     // Sử dụng flow để xử lý async actions
     fetchCoupons: flow(function* (forceRefresh = false) {
-      self.setLoading(true);
+      self.setFetching(true);
       self.setError(null);
       
       try {
@@ -87,7 +87,11 @@ export const RootStore = types
         const errorMessage = err instanceof Error ? err.message : 'Failed to fetch coupons';
         self.setError(errorMessage);
       } finally {
-        self.setLoading(false);
+        console.log(`finally: ${self.isFetching}`);
+        setTimeout(() => {
+          self.setFetching(false);
+          console.log(`setTimeout: ${self.isFetching}`);
+        }, 5_000);
       }
     }),
   }));
@@ -101,7 +105,7 @@ let _store: IRootStore | undefined;
 export function initializeStore() {
   _store = RootStore.create({
     coupons: [],
-    isLoading: false,
+    isFetching: true,
     error: null
   });
   
@@ -113,4 +117,11 @@ export function getStore() {
     _store = initializeStore();
   }
   return _store;
+}
+
+if (module.hot) {
+  module.hot.dispose(() => {
+    _store = undefined; // Clear the store reference on hot reload
+  });
+  module.hot.accept();
 } 

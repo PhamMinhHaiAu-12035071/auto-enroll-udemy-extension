@@ -7,15 +7,9 @@ import Pager from '../../components/Pager';
 import AnalysisTab from '../../components/Tabs/AnalysisTab';
 import CourseTab from '../../components/Tabs/CourseTab';
 import HistoryTab from '../../components/Tabs/HistoryTab';
-import { ICoupon } from "../../models/CouponModel";
 
-interface HomeProps {
-    coupons: ICoupon[];
-    isLoading: boolean;
-    error: string | null;
-}
 
-const Home: React.FC<HomeProps> = observer(({ coupons, isLoading, error }) => {
+const Home: React.FC = observer(() => {
     const [currentTab, setCurrentTab] = useState<TabType>('history');
 
     const getTabIndex = (tab: TabType): number => {
@@ -24,7 +18,7 @@ const Home: React.FC<HomeProps> = observer(({ coupons, isLoading, error }) => {
     };
 
     const renderTabs = () => [
-        <CourseTab key="course" coupons={coupons} />,
+        <CourseTab key="course" />,
         <HistoryTab key="history" />,
         <AnalysisTab key="analysis" />
     ];
@@ -41,14 +35,6 @@ const Home: React.FC<HomeProps> = observer(({ coupons, isLoading, error }) => {
             <div className="fixed bottom-0 left-0 right-0 w-[var(--popup-width)]">
                 <BottomBar defaultTab={currentTab} onTabChange={setCurrentTab} />
             </div>
-
-            {isLoading && <p>Loading...</p>}
-            {error && <p>Error: {error}</p>}
-            <ul>
-                {coupons.map(coupon => (
-                    <li key={coupon.id}>{coupon.title}</li>
-                ))}
-            </ul>
         </div>
     );
 });

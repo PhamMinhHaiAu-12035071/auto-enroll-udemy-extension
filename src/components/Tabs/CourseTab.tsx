@@ -1,12 +1,10 @@
 import React from 'react';
-import { ICoupon } from '../../models/CouponModel';
+import { useStore } from '../../hooks/useStore';
 import CourseCard from '../Course/CourseCard';
 
-interface CourseTabProps {
-    coupons: ICoupon[];
-}
-
-const CourseTab: React.FC<CourseTabProps> = ({ coupons }) => {
+const CourseTab: React.FC = () => {
+    const store = useStore();
+    const coupons = store.coupons;
     return (
         <div className="h-full p-4 overflow-y-auto bg-base">
             <h2 className="text-xl font-bold mb-2">Courses</h2>
