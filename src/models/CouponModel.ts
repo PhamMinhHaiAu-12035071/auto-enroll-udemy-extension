@@ -87,11 +87,9 @@ export const RootStore = types
         const errorMessage = err instanceof Error ? err.message : 'Failed to fetch coupons';
         self.setError(errorMessage);
       } finally {
-        console.log(`finally: ${self.isFetching}`);
         setTimeout(() => {
           self.setFetching(false);
-          console.log(`setTimeout: ${self.isFetching}`);
-        }, 5_000);
+        }, 3_000);
       }
     }),
   }));
