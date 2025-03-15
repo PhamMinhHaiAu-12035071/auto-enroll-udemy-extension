@@ -45,6 +45,7 @@ export interface GotoCourseMessage {
 
 // Define enum for all UdemyMessage actions
 export enum UdemyMessageAction {
+  CHECK_COURSE = 'CHECK_COURSE',
   COURSE_EXPIRED = 'COURSE_EXPIRED',
   ENROLL_COURSE = 'ENROLL_COURSE',
   COMPLETE_ENROLL_COURSE = 'COMPLETE_ENROLL_COURSE',

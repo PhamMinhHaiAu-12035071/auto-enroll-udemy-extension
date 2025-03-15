@@ -1,4 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { RowCoupon } from '../../type';
 
 const SUPABASE_URL = 'https://ggmuhijchpcrlbhfkjah.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdnbXVoaWpjaHBjcmxiaGZramFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE3MDA4NDMsImV4cCI6MjA1NzI3Njg0M30.VL-dwBIAMCMIeceiX76uK1bgW4CmY37MQ1atrguFl0U'
@@ -120,7 +121,10 @@ export class SupabaseService {
       }
     ];
     if (mock) {
-      return mockCoupons;
+      return [{
+        id: 1,
+        coupon: mockCoupons[0]
+      } as RowCoupon] as RowCoupon[];
     }
     const { data, error } = await this.client
       .from(this.tableName)

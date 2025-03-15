@@ -48,7 +48,6 @@ export const enrollCoursePage = (tabId: number, coupon: Coupon) => {
   ) => {
     const observer = new MutationObserver(() => {
       const buttonStatus = getEnrollButtonStatus();
-      console.log('buttonStatus', buttonStatus);
       if (buttonStatus.isReady) {
         if (
           buttonStatus.buttonText &&

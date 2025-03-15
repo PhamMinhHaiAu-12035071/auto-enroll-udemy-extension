@@ -73,44 +73,46 @@ const handleCompleteEnrollCourse = async (
 export const main = () => {
   chrome.runtime.onMessage.addListener(
     async (request, sender, sendResponse) => {
-      if (request.action === 'OPEN_SITE_UDEMY') {
-        const tab = await createTabUrl(request.url);
-
-        if (!tab.id) {
+      if (request.action === UdemyMessageAction.CHECK_COURSE) {
+        console.log('Received action CHECK_COURSE');
+        
+        const tab = await createTabUrl(`https://www.udemy.com/`);      
+        if (!tab?.id) {
+          console.log('No tab ID found, exiting.');
           return;
         }
 
-        await updateTabUrl(tab.id, request.url);
+        const coupon = request.coupon as Coupon;
+        console.log('Coupon received:', coupon);
 
-        await chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          func: enrollCoursePage,
-          args: [tab.id, request.coupon],
-        });
+        console.log('show coupon');
+        console.log(coupon);
+
+        await updateTabUrl(tab.id, coupon.link);
       }
 
-      if (request.action === UdemyMessageAction.ENROLL_COURSE) {
-        handleEnrollCourse(request.coupon, request.tabId, request.courseId);
-      }
+      // if (request.action === UdemyMessageAction.ENROLL_COURSE) {
+      //   handleEnrollCourse(request.coupon, request.tabId, request.courseId);
+      // }
 
-      if (request.action === UdemyMessageAction.COURSE_EXPIRED) {
-        reportStore.addBuyNowCourse(request.coupon);
-      }
+      // if (request.action === UdemyMessageAction.COURSE_EXPIRED) {
+      //   reportStore.addBuyNowCourse(request.coupon);
+      // }
 
-      if (request.action === UdemyMessageAction.GOTO_COURSE) {
-        reportStore.addGoToCourse(request.coupon);
-      }
+      // if (request.action === UdemyMessageAction.GOTO_COURSE) {
+      //   reportStore.addGoToCourse(request.coupon);
+      // }
 
-      if (request.action === UdemyMessageAction.COMPLETE_ENROLL_COURSE) {
-        const isSuccess = await handleCompleteEnrollCourse(
-          request.tabId,
-          request.coupon
-        );
+      // if (request.action === UdemyMessageAction.COMPLETE_ENROLL_COURSE) {
+      //   const isSuccess = await handleCompleteEnrollCourse(
+      //     request.tabId,
+      //     request.coupon
+      //   );
 
-        if (isSuccess) {
-          reportStore.addEnrollNowCourse(request.coupon, request.price);
-        }
-      }
+      //   if (isSuccess) {
+      //     reportStore.addEnrollNowCourse(request.coupon, request.price);
+      //   }
+      // }
     }
   );
 };

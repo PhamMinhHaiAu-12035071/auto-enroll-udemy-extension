@@ -50,6 +50,9 @@ export const RootStore = types
         if (!coupons) {
           const rows: RowCoupon[] = yield SupabaseService.getInstance().getCouponsWithinLimit(true);
           coupons = rows.map(row => row.coupon) as ICoupon[];
+
+          console.log('get coupons from supabase');
+          console.log(coupons);
           
           // Cache the results
           yield CacheService.set(CACHE_KEYS.COUPONS, coupons);
