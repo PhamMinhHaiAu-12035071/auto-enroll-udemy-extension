@@ -1,5 +1,5 @@
 import React, { useContext, createContext } from 'react';
-import { IRootStore, getStore } from '../models/CouponModel';
+import { IRootStore, getStore } from '../models/RootStore';
 
 // Tạo context để truyền store xuống component tree
 const StoreContext = createContext<IRootStore | undefined>(undefined);

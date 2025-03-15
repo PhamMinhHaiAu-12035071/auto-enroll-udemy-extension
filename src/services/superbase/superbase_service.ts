@@ -68,7 +68,7 @@ export class SupabaseService {
       throw error;
     }
 
-    return count || 0;
+    return count ?? 0;
   }
 
   /**

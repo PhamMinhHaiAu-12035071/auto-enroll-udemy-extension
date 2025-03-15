@@ -1,50 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import './style.scss';
-import findCourse from '../../assets/img/find-course.svg';
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
-import { motion, AnimatePresence } from 'framer-motion';
-
-interface FindCourseLoadingStateProps {
-    isVisible: boolean;
-    message: string;
-    className?: string;
-}
-
-// Card container animation variants
-const cardContainerVariants = {
-    hidden: {
-        opacity: 0,
-        y: 70,
-        scale: 0,
-        transformOrigin: "center bottom"
-    },
-    visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-            type: 'spring',
-            damping: 20,
-            stiffness: 150,
-            duration: 1.5,
-            ease: [0.16, 1, 0.3, 1],
-            scale: { duration: 1.5, ease: [0, 1, 0.5, 1] },
-        }
-    },
-    exit: {
-        opacity: 0,
-        y: -30,
-        scale: 0.5,
-        transformOrigin: "center center",
-        transition: {
-            duration: 0.7,
-            ease: [0.43, 0.13, 0.23, 0.96], // Custom easing for smoother exit
-            opacity: { duration: 0.5 }, // Fade out slightly faster
-            scale: { duration: 0.6 }, // Scale slightly slower for better effect
-            y: { duration: 0.5, ease: "easeInOut" } // Custom easing for y movement
-        }
-    }
-};
+import React, { useEffect, useRef } from 'react';
+import findCourse from '../../assets/img/find-course.svg';
+import './style.scss';
 
 // Variants cho dot đầu tiên - xuất hiện trước
 const firstDotVariants = {
@@ -90,11 +48,7 @@ const thirdDotVariants = {
     }
 };
 
-const FindCourseLoadingState: React.FC<FindCourseLoadingStateProps> = ({
-    isVisible,
-    message,
-    className = ""
-}) => {
+const FindCourseLoadingState = () => {
     const svgRef = useRef<HTMLImageElement>(null);
 
     useEffect(() => {
@@ -161,54 +115,46 @@ const FindCourseLoadingState: React.FC<FindCourseLoadingStateProps> = ({
     }, []);
 
     return (
-        <AnimatePresence>
-            {isVisible && (
-                <motion.div
-                    className={`app-find-course-loading-state ${className}`}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    variants={cardContainerVariants}
-                >
-                    <div className={`pushable`}>
-                        <span className={`front font-craft-demi`}>
-                            <div className="loading-text">
-                                {message}
-                                <div className="loading-dots-container">
-                                    <motion.span
-                                        className="motion-dot"
-                                        initial="initial"
-                                        animate="animate"
-                                        variants={firstDotVariants}
-                                    >.</motion.span>
-                                    <motion.span
-                                        className="motion-dot"
-                                        initial="initial"
-                                        animate="animate"
-                                        variants={secondDotVariants}
-                                    >.</motion.span>
-                                    <motion.span
-                                        className="motion-dot"
-                                        initial="initial"
-                                        animate="animate"
-                                        variants={thirdDotVariants}
-                                    >.</motion.span>
-                                </div>
-                            </div>
-                            <div className="find-course-image">
-                                <div className="shadow-element"></div>
-                                <img
-                                    ref={svgRef}
-                                    src={findCourse}
-                                    alt="findCourse"
-                                    style={{ backgroundColor: 'transparent' }}
-                                />
-                            </div>
-                        </span>
+
+        <div className={`app-find-course-loading-state`}>
+            <div className={`pushable`}>
+                <span className={`front font-craft-demi`}>
+                    <div className="loading-text">
+                        {`Search courses`}
+                        <div className="loading-dots-container">
+                            <motion.span
+                                className="motion-dot"
+                                initial="initial"
+                                animate="animate"
+                                variants={firstDotVariants}
+                            >.</motion.span>
+                            <motion.span
+                                className="motion-dot"
+                                initial="initial"
+                                animate="animate"
+                                variants={secondDotVariants}
+                            >.</motion.span>
+                            <motion.span
+                                className="motion-dot"
+                                initial="initial"
+                                animate="animate"
+                                variants={thirdDotVariants}
+                            >.</motion.span>
+                        </div>
                     </div>
-                </motion.div>
-            )}
-        </AnimatePresence>
+                    <div className="find-course-image">
+                        <div className="shadow-element"></div>
+                        <img
+                            ref={svgRef}
+                            src={findCourse}
+                            alt="findCourse"
+                            style={{ backgroundColor: 'transparent' }}
+                        />
+                    </div>
+                </span>
+            </div>
+        </div>
+
     );
 };
 

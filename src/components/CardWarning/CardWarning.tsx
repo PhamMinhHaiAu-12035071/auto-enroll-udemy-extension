@@ -23,7 +23,7 @@ const CardWarning: React.FC<CardWarningProps> = ({
                     <h3 className="text-[var(--color-dark)] text-xl font-bold mb-2 font-craft-cd">
                         {title}
                     </h3>
-                    <p className="text-[var(--color-dark)] font-craft-cd">
+                    <p className="text-[var(--color-dark)] font-craft-cd text-lg">
                         {message}
                     </p>
                 </div>

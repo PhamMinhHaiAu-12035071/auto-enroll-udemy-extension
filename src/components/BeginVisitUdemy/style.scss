@@ -1,18 +1,13 @@
-.app-pull-course-state {
+.app-begin-visit-udemy {
     font-family: var(--font-craft);
     
     .pushable {
       background: var(--color-dark);
-      border-radius: 24px;
+      border: none;
       padding: 0;
       cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      &:focus:not(:focus-visible) {
-        outline: none;
-      }
+      position: relative;
+      border-radius: 24px;
     }
   
     .front {
@@ -22,62 +17,17 @@
       padding: 12px 12px 28px 12px;
       border-radius: 24px;
       font-size: 1.25rem;
-      background: hsl(234.65deg 72.48% 82.92%);
+      background: var(--color-yellow);
       color: var(--color-dark);
       transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
       transform: translate(-6px, -6px);
-      width: 100%;
       text-align: center;
       border: 1px solid var(--color-dark);
-    }
-
-    .loading-text {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 24px;
-        position: relative;
-    }
-    
-    .loading-dots-container {
-        display: inline-flex;
-        margin-left: 4px;
-        height: 24px;
-        align-items: center;
-    }
-    
-    .motion-dot {
-        display: inline-block;
-        margin: 0 2px;
-        font-weight: bold;
-        font-size: 1.5rem;
-        line-height: 0;
-        position: relative;
-        margin-top: -3px;
-    }
-
-    .find-course-image {
-      width: 75px;
-      height: 60px;
-      perspective: 500px;
-      transform-style: preserve-3d;
       position: relative;
-      
-      .shadow-element {
-        position: absolute;
-        bottom: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60%;
-        height: 12px;
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 50%;
-        filter: blur(4px);
-        z-index: -1;
-      }
+      z-index: 1;
     }
-
-    .pull-course-state-img {
+    
+    .app-begin-visit-udemy-img {
       width: 75px;
       height: 60px;
       perspective: 500px;
@@ -110,8 +60,4 @@
         z-index: 1;
       }
     }
-}
-
-.text-color-off-white {
-    color: var(--color-off-white);
 }

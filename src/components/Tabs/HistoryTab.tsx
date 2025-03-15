@@ -1,33 +1,60 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react';
-import { getStore } from '../../models/CouponModel';
+import React from 'react';
+import { HistoryStep } from '../../models/HistoryModel';
+import { getStore } from '../../models/RootStore';
+import BeginVisitUdemy from '../BeginVisitUdemy/BeginVisitUdemy';
+import CardSharedAnimation from '../CardSharedAnimation';
 import FindCourseLoadingState from '../FindCourseLoadingState/FindCourseLoadingState';
 import PullCourseState from '../PullCourseState/PullCourseState';
 
 const HistoryTab: React.FC = observer(() => {
-    const store = getStore();
-    const [showPullState, setShowPullState] = useState(false);
-
-    // Hiển thị PullCourseState sau khi FindCourseLoadingState biến mất
-    useEffect(() => {
-        if (!store.isFetching) {
-            // Delay hiển thị PullCourseState để tạo hiệu ứng tuần tự
-            const timer = setTimeout(() => {
-                setShowPullState(true);
-            }, 500); // Delay 500ms sau khi FindCourseLoadingState biến mất
-
-            return () => clearTimeout(timer);
-        } else {
-            setShowPullState(false);
-        }
-    }, [store.isFetching]);
 
     return (
-        <div className="h-full bg-base py-24 px-4">
-            <FindCourseLoadingState isVisible={store.isFetching} message="Search courses" />
-            <PullCourseState isVisible={showPullState} coursesCount={1280} />
+        <div className="bg-base relative h-[var(--popup-height)] w-[var(--popup-width)]">
+            <FindCourseLoadingStateCardAnimation />
+            <PullCourseStateCardAnimation />
+            <BeginVisitUdemyCardAnimation />
         </div>
     );
 });
 
-export default HistoryTab; 
+const FindCourseLoadingStateCardAnimation = observer(() => {
+    const store = getStore();
+    const isVisible = store.history.currentStep === HistoryStep.FIND_COURSE;
+    return (
+        <CardSharedAnimation
+            className='absolute top-40 left-0 w-full h-full px-6'
+            isVisible={isVisible}
+        >
+            <FindCourseLoadingState />
+        </CardSharedAnimation>
+    );
+});
+
+const PullCourseStateCardAnimation = observer(() => {
+    const store = getStore();
+    const isVisible = store.history.currentStep === HistoryStep.PULL_COURSE;
+    return (
+        <CardSharedAnimation
+            className='absolute top-40 left-0 w-full h-full px-6'
+            isVisible={isVisible}
+        >
+            <PullCourseState coursesCount={1280} />
+        </CardSharedAnimation>
+    );
+});
+
+const BeginVisitUdemyCardAnimation = observer(() => {
+    const store = getStore();
+    const isVisible = store.history.currentStep === HistoryStep.GO_TO_UDEMY;
+    return (
+        <CardSharedAnimation
+            className='absolute top-40 left-0 w-full h-full px-6'
+            isVisible={isVisible}
+        >
+            <BeginVisitUdemy />
+        </CardSharedAnimation>
+    );
+});
+
+export default HistoryTab;
