@@ -1,12 +1,11 @@
 import {
   ButtonStatus,
-  Coupon,
   CourseExpiredMessage,
   EnrollCourseMessage,
   GotoCourseMessage,
   UdemyNetworkResource,
 } from './types';
-
+import { Coupon } from '../../type';
 export const enrollCoursePage = (tabId: number, coupon: Coupon) => {
   const TIMEOUT = 2_000;
 

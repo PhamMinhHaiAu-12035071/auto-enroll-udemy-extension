@@ -1,6 +1,6 @@
 import { checkoutCartPage } from './checkout_cart_page';
 import { enrollCoursePage } from './enroll_course_page';
-import { Coupon, UdemyMessageAction } from './types';
+import {  UdemyMessageAction } from './types';
 import {
   createTabUrl,
   isCartSuccessUrl,
@@ -8,6 +8,7 @@ import {
   isPaymentCheckoutUrl,
 } from './utils';
 import { reportStore } from './report_store';
+import { Coupon } from '../../type';
 
 const handleEnrollCourse = async (
   coupon: Coupon,

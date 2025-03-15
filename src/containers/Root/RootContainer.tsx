@@ -6,11 +6,19 @@ import HomeContainer from "../Home/HomeContainer";
 
 export type PageType = "home" | "addCourse";
 
+// Định nghĩa kiểu dữ liệu cho params
+export interface NavigationParams {
+    [key: string]: any;
+}
+
 const RootContainer: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<PageType>("addCourse");
+    const [pageParams, setPageParams] = useState<NavigationParams>({});
 
-    const navigateTo = (page: PageType) => {
+    // Phương thức điều hướng mới với params
+    const navigateTo = (page: PageType, params: NavigationParams = {}) => {
         setCurrentPage(page);
+        setPageParams(params);
     };
 
     return (
@@ -18,12 +26,12 @@ const RootContainer: React.FC = () => {
             <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
                 {currentPage === "home" && (
                     <Layout key="home">
-                        <HomeContainer onNavigate={navigateTo} />
+                        <HomeContainer navigateTo={navigateTo} params={pageParams} />
                     </Layout>
                 )}
                 {currentPage === "addCourse" && (
                     <Layout key="addCourse">
-                        <AddCoursePage onNavigate={navigateTo} />
+                        <AddCoursePage navigateTo={navigateTo} params={pageParams} />
                     </Layout>
                 )}
             </AnimatePresence>

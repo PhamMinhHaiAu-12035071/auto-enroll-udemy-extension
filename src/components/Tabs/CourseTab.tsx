@@ -1,12 +1,12 @@
 import React from 'react';
+import { ICoupon } from '../../models/CouponModel';
 import CourseCard from '../Course/CourseCard';
-import { Coupon } from '../../type';
 
 interface CourseTabProps {
-    mockCoupon: Coupon;
+    coupons: ICoupon[];
 }
 
-const CourseTab: React.FC<CourseTabProps> = ({ mockCoupon }) => {
+const CourseTab: React.FC<CourseTabProps> = ({ coupons }) => {
     return (
         <div className="h-full p-4 overflow-y-auto bg-base">
             <h2 className="text-xl font-bold mb-2">Courses</h2>
@@ -15,11 +15,11 @@ const CourseTab: React.FC<CourseTabProps> = ({ mockCoupon }) => {
             <div className="mb-6">
                 <div className="mt-4">
                     <div className="space-y-5">
-                        {Array.from({ length: 20 }).map((_, index) => (
+                        {coupons.map((coupon, index) => (
                             <CourseCard
-                                key={`course-${index}`}
+                                key={`${coupon.id}`}
                                 id={index + 1}
-                                coupon={mockCoupon}
+                                coupon={coupon}
                                 backgroundColor="hsl(0deg 0% 99.6%)"
                                 shadowColor="hsl(0deg 0% 7.5%)"
                                 borderColor="hsl(0deg 0% 24%)"

@@ -1,15 +1,23 @@
 import React from "react";
 import Button from "../../components/Button/Button";
 import Header from "../../components/Header";
-import { PageType } from "../Root/RootContainer";
+import { PageType, NavigationParams } from "../Root/RootContainer";
 import WavingCharacters from "../../components/WavingCharacters/WavingCharacters";
 import CardWarning from "../../components/CardWarning/CardWarning";
 
 interface AddCoursePageProps {
-    onNavigate: (page: PageType) => void;
+    navigateTo: (page: PageType, params?: NavigationParams) => void;
+    params: NavigationParams;
 }
 
-const AddCoursePage = ({ onNavigate }: AddCoursePageProps) => {
+const AddCoursePage: React.FC<AddCoursePageProps> = ({ navigateTo, params }) => {
+    const handleAddCourse = () => {
+        // Ví dụ truyền params khi chuyển màn hình
+        navigateTo("home", {
+            fromScreen: "addCourse",
+        });
+    };
+
     return (
         <div className="relative h-[var(--popup-height)] w-[var(--popup-width)] bg-base flex flex-col">
             <Header title="Add Course Auto Enroll" />
@@ -19,7 +27,10 @@ const AddCoursePage = ({ onNavigate }: AddCoursePageProps) => {
                     <WavingCharacters />
                 </div>
                 <div className="px-3">
-                    <CardWarning title="Warning" message="Please make sure that you are logged in to your Udemy account." />
+                    <CardWarning
+                        title="Warning"
+                        message="Please make sure that you are logged in to your Udemy account."
+                    />
                 </div>
                 <Button
                     text="Add Tan's course"
@@ -27,7 +38,7 @@ const AddCoursePage = ({ onNavigate }: AddCoursePageProps) => {
                     shadowColor="hsl(0deg 0% 7.5%)"
                     borderColor="hsl(0deg 0% 24%)"
                     borderRadius={20}
-                    onClick={() => onNavigate("home")}
+                    onClick={handleAddCourse}
                 />
             </main>
         </div>

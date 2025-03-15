@@ -1,15 +1,24 @@
-import React from "react";
-import { PageType } from "../Root/RootContainer";
+import React, { useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import { NavigationParams, PageType } from "../Root/RootContainer";
 import Home from "./Home";
+import { useStore } from "../../hooks/useStore";
 
-interface PopupContainerProps {
-    onNavigate: (page: PageType) => void;
+interface HomeContainerProps {
+    navigateTo: (page: PageType, params?: NavigationParams) => void;
+    params: NavigationParams;
 }
 
-const HomeContainer: React.FC<PopupContainerProps> = ({ onNavigate }) => {
+const HomeContainer: React.FC<HomeContainerProps> = observer(({ navigateTo, params }) => {
+    const store = useStore();
+
+    useEffect(() => {
+        store.fetchCoupons();
+    }, [store]);
+
     return (
-        <Home coupons={[]} isLoading={false} error={null} />
+        <Home coupons={store.coupons} isLoading={store.isLoading} error={store.error} />
     );
-};
+});
 
 export default HomeContainer; 

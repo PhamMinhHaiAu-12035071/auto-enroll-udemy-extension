@@ -1,4 +1,5 @@
 export type Coupon = {
+    id: string
     title: string
     link: string
     couponCode: string
