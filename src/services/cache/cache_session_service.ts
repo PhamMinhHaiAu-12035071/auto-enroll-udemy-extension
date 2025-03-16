@@ -119,5 +119,6 @@ export const SESSION_CACHE_KEYS = {
     NAVIGATION_STATE: 'navigationStateSession',
     HISTORY_STATE: 'historyStateSession',
     COUPONS: 'couponsSession',
-    REPORT_DATA: 'reportDataSession'
+    REPORT_DATA: 'reportDataSession',
+    TOUR_ADD_COURSE: 'tourAddCourseSession',
 };

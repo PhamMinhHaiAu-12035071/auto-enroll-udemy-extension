@@ -8,6 +8,7 @@ interface AppButtonProps {
     borderRadius?: string | number;
     borderColor?: string;
     onClick?: () => void;
+    className?: string;
 }
 
 const AppButton: React.FC<AppButtonProps> = ({
@@ -16,7 +17,8 @@ const AppButton: React.FC<AppButtonProps> = ({
     shadowColor,
     borderRadius = "12px",
     borderColor = "hsl(345deg 100% 47%)",
-    onClick
+    onClick,
+    className,
 }) => {
     // Tự động tính toán màu shadow nếu không được cung cấp
     const calculatedShadowColor = shadowColor ?? calculateShadowColor(backgroundColor);
@@ -36,7 +38,7 @@ const AppButton: React.FC<AppButtonProps> = ({
     };
 
     return (
-        <div className="app-button">
+        <div className={`app-button ${className}`}>
             <button
                 className={`pushable`}
                 style={pushableStyle}
