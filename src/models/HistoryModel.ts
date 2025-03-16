@@ -13,11 +13,13 @@ export enum HistoryStep {
 // Interface for history state
 interface HistoryState {
   currentStep: HistoryStep;
+  isRunningBackground: boolean;
 }
 
 // Default history state values
 const DEFAULT_HISTORY_STATE = {
-  currentStep: HistoryStep.INITIAL
+  currentStep: HistoryStep.INITIAL,
+  isRunningBackground: false
 };
 
 /**
@@ -32,25 +34,35 @@ export const getInitialHistoryState = async (): Promise<HistoryState> => {
 // Model cho Coupon
 export const HistoryModel = types.model('History', {
   currentStep: types.enumeration('HistoryStep', Object.values(HistoryStep)),
+  isRunningBackground: types.optional(types.boolean, false)
 })
 .actions(self => {
   // Helper function to cache current history state
   const cacheHistoryState = async () => {
     const historyState: HistoryState = {
-      currentStep: self.currentStep
+      currentStep: self.currentStep,
+      isRunningBackground: self.isRunningBackground
     };
     await CacheSessionService.set<HistoryState>(SESSION_CACHE_KEYS.HISTORY_STATE, historyState);
   };
 
   return {
-    requestBackgroundCheckCoupon: (coupon: ICouponItem) => {
+    requestBackgroundCheckCoupon: flow(function* (coupon: ICouponItem) {
+      self.isRunningBackground = true;
+      yield cacheHistoryState();
       chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupon });
-    },
+    }),
+
     setCurrentStep: flow(function* (step: HistoryStep) {
       self.currentStep = step;
       yield cacheHistoryState();
     }),
-    
+
+    setIsRunningBackground: flow(function* (isRunning: boolean) {
+      self.isRunningBackground = isRunning;
+      yield cacheHistoryState();
+    }),
+
     reset() {
       self.currentStep = HistoryStep.INITIAL;
       cacheHistoryState();
