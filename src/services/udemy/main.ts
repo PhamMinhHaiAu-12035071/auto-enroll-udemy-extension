@@ -141,7 +141,7 @@ const messageListener = async (request: any, sender: any, sendResponse: any) => 
   }
 };
 
-const finishCrawlCoupon = async () => {
+const finishCrawlCoupon = async (tabId: number) => {
   removeUdemyMessageListener();
  
   const historyState: HistoryState = {
@@ -162,10 +162,20 @@ const finishCrawlCoupon = async () => {
     buttons: []
   });
 
+  console.log(`Crawl Coupon Completed`);
+
+  // Close the tab after crawling is complete
+  try {
+    await chrome.tabs.remove(tabId);
+    console.log(`Tab ${tabId} closed successfully.`);
+  } catch (error) {
+    console.error(`Failed to close tab ${tabId}:`, error);
+  }
 }
+
 const crawlerCoupon = async (tabId: number) => {
   if (reportStore.getReport().count >= reportStore.getReport().coupons.length) {
-    await finishCrawlCoupon();
+    await finishCrawlCoupon(tabId);
     return;
   }
 

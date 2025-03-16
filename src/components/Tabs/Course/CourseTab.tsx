@@ -1,8 +1,7 @@
 import React from 'react';
-import { useStore } from '../../../hooks/useStore';
+import { reportStore } from '../../../services/udemy/report_store';
 import CourseCard from '../../Course/CourseCard';
 import './style.scss';
-import { reportStore } from '../../../services/udemy/report_store';
 const CourseTab: React.FC = () => {
     const enrolledCourses = reportStore.getReport().details.enrollNow;
     const length = enrolledCourses.length;

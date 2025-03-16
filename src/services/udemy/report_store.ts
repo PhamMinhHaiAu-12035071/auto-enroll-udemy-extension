@@ -4,6 +4,11 @@ import {
   EnrollmentReport,
 } from './types';
 import { Coupon } from '../../type';
+import { CacheSessionService, SESSION_CACHE_KEYS } from '../cache/cache_session_service';
+
+// Tạo cache key riêng cho report data
+const REPORT_CACHE_KEY = SESSION_CACHE_KEYS.REPORT_DATA
+
 class ReportStore {
   private static instance: ReportStore;
   private report: EnrollmentReport;
@@ -28,6 +33,9 @@ class ReportStore {
         enrollNow: [],
       },
     };
+
+    // Try to load from cache immediately
+    this.loadFromCache();
   }
 
   public static getInstance(): ReportStore {
@@ -37,16 +45,44 @@ class ReportStore {
     return ReportStore.instance;
   }
 
-  public incrementCount(): void {
-    this.report.count++;
+  /**
+   * Load report data from cache session
+   */
+  private async loadFromCache(): Promise<void> {
+    try {
+      const cachedReport = await CacheSessionService.get<EnrollmentReport>(REPORT_CACHE_KEY);
+      if (cachedReport) {
+        this.report = cachedReport;
+        console.log('Loaded report data from cache session');
+      }
+    } catch (error) {
+      console.error('Failed to load report from cache', error);
+    }
   }
 
-  public addCoupons(coupons: Coupon[]): void {
+  /**
+   * Save current report data to cache session
+   */
+  private async saveToCache(): Promise<void> {
+    try {
+      await CacheSessionService.set(REPORT_CACHE_KEY, this.report);
+    } catch (error) {
+      console.error('Failed to save report to cache', error);
+    }
+  }
+
+  public async incrementCount(): Promise<void> {
+    this.report.count++;
+    await this.saveToCache();
+  }
+
+  public async addCoupons(coupons: Coupon[]): Promise<void> {
     this.report.coupons = coupons;
+    await this.saveToCache();
   }
 
   // Thêm khoá học đã hết hạn
-  public addBuyNowCourse(coupon: Coupon): void {
+  public async addBuyNowCourse(coupon: Coupon): Promise<void> {
     const courseDetail: EnrolledCourseDetail = {
       coupon,
       status: CourseEnrollStatus.BUY_NOW,
@@ -54,10 +90,11 @@ class ReportStore {
 
     this.report.statistics.buyNowCount++;
     this.report.details.buyNow.push(courseDetail);
+    await this.saveToCache();
   }
 
   // Thêm khoá học đã đăng ký
-  public addGoToCourse(coupon: Coupon): void {
+  public async addGoToCourse(coupon: Coupon): Promise<void> {
     const courseDetail: EnrolledCourseDetail = {
       coupon,
       status: CourseEnrollStatus.GO_TO_COURSE,
@@ -65,10 +102,11 @@ class ReportStore {
 
     this.report.statistics.goToCourseCount++;
     this.report.details.goToCourse.push(courseDetail);
+    await this.saveToCache();
   }
 
   // Thêm khoá học có thể enroll
-  public addEnrollNowCourse(coupon: Coupon): void {
+  public async addEnrollNowCourse(coupon: Coupon): Promise<void> {
     const courseDetail: EnrolledCourseDetail = {
       coupon,
       status: CourseEnrollStatus.ENROLL_NOW,
@@ -80,6 +118,8 @@ class ReportStore {
     // Cập nhật tổng tiền tiết kiệm
     this.report.savings.totalOriginalPrice += coupon.price ?? 0;
     this.report.savings.currency = 'VND';
+    
+    await this.saveToCache();
   }
 
   // Lấy toàn bộ report
@@ -88,7 +128,7 @@ class ReportStore {
   }
 
   // Reset report
-  public resetReport(): void {
+  public async resetReport(): Promise<void> {
     this.report = {
       count: 0,
       coupons: [],
@@ -107,6 +147,9 @@ class ReportStore {
         enrollNow: [],
       },
     };
+    
+    // Xóa dữ liệu trong cache
+    await CacheSessionService.remove(REPORT_CACHE_KEY);
   }
 }
 

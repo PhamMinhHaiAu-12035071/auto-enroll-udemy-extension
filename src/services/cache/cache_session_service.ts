@@ -118,5 +118,6 @@ export class CacheSessionService {
 export const SESSION_CACHE_KEYS = {
     NAVIGATION_STATE: 'navigationStateSession',
     HISTORY_STATE: 'historyStateSession',
-    COUPONS: 'couponsSession'
+    COUPONS: 'couponsSession',
+    REPORT_DATA: 'reportDataSession'
 };

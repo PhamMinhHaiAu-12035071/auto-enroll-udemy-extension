@@ -56,7 +56,7 @@ export const HistoryModel = types.model('History', {
     requestBackgroundCheckCoupon: flow(function* (coupons: ICouponItem[]) {
       self.backgroundStatus = BackgroundStatus.RUNNING;
       yield cacheHistoryState();
-      // yield chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupons });
+      yield chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupons });
     }),
 
     setCurrentStep: flow(function* (step: HistoryStep) {

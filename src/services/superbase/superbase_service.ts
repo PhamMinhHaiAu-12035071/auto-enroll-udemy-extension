@@ -1,5 +1,4 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
-import { RowCoupon } from '../../type';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = 'https://ggmuhijchpcrlbhfkjah.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdnbXVoaWpjaHBjcmxiaGZramFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE3MDA4NDMsImV4cCI6MjA1NzI3Njg0M30.VL-dwBIAMCMIeceiX76uK1bgW4CmY37MQ1atrguFl0U'
