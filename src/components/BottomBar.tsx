@@ -1,28 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CourseIcon, HistoryIcon, AnalysisIcon } from './icons';
-
+import { BottomTab } from '../models/PersistentRouterModel';
+import { useStore } from '../hooks/useStore';
 export type TabType = 'course' | 'history' | 'analysis';
 
 interface BottomBarProps {
-    defaultTab?: TabType;
-    onTabChange?: (tab: TabType) => void;
+    defaultTab?: BottomTab;
+    onTabChange?: (tab: BottomTab) => void;
     restrictToDefaultTab?: boolean;
 }
 
-const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'history', onTabChange, restrictToDefaultTab = true }) => {
-    const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
+const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = BottomTab.HISTORY, onTabChange, restrictToDefaultTab = true }) => {
+    const store = useStore();
     const tabsContainerRef = useRef<HTMLDivElement>(null);
     const [indicatorStyle, setIndicatorStyle] = useState({
         left: '0px',
         width: '0px',
     });
 
-    const handleTabClick = (tab: TabType) => {
+    const handleTabClick = (tab: BottomTab) => {
         if (restrictToDefaultTab && tab !== defaultTab) {
             return;
         }
 
-        setActiveTab(tab);
+        store.persistentRouter.setActiveBottomTab(tab);
         if (onTabChange) {
             onTabChange(tab);
         }
@@ -37,7 +38,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'history', onTabChan
     // Update indicator position when active tab changes
     useEffect(() => {
         if (tabsContainerRef.current) {
-            const activeTabElement = tabsContainerRef.current.querySelector(`[data-tab="${activeTab}"]`) as HTMLElement;
+            const activeTabElement = tabsContainerRef.current.querySelector(`[data-tab="${store.persistentRouter.activeBottomTab}"]`) as HTMLElement;
 
             if (activeTabElement) {
                 const containerRect = tabsContainerRef.current.getBoundingClientRect();
@@ -49,14 +50,14 @@ const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'history', onTabChan
                 });
             }
         }
-    }, [activeTab]);
+    }, [store.persistentRouter.activeBottomTab]);
 
     // Ensure active tab matches default tab in restricted mode
     useEffect(() => {
-        if (restrictToDefaultTab && activeTab !== defaultTab) {
-            setActiveTab(defaultTab);
+        if (restrictToDefaultTab && store.persistentRouter.activeBottomTab !== defaultTab) {
+            store.persistentRouter.setActiveBottomTab(defaultTab);
         }
-    }, [restrictToDefaultTab, defaultTab]);
+    }, [restrictToDefaultTab, defaultTab, store.persistentRouter.activeBottomTab, store.persistentRouter]);
 
     return (
         <div className="w-full bg-primary h-[56px] flex items-center">
@@ -74,14 +75,14 @@ const BottomBar: React.FC<BottomBarProps> = ({ defaultTab = 'history', onTabChan
                 />
 
                 {tabs.map((tab) => {
-                    const isActive = activeTab === tab.id;
+                    const isActive = store.persistentRouter.activeBottomTab === tab.id;
                     const isDisabled = restrictToDefaultTab && tab.id !== defaultTab;
 
                     return (
                         <button
                             key={tab.id}
                             data-tab={tab.id}
-                            onClick={() => handleTabClick(tab.id as TabType)}
+                            onClick={() => handleTabClick(tab.id as BottomTab)}
                             disabled={isDisabled}
                             className={`
                                 relative z-10 flex items-center justify-center h-[40px] rounded-full transition-colors duration-300

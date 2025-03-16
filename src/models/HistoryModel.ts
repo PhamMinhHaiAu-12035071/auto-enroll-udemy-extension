@@ -1,7 +1,6 @@
 import { flow, types } from 'mobx-state-tree';
 import { CacheSessionService, SESSION_CACHE_KEYS } from '../services/cache/cache_session_service';
 import { UdemyMessageAction } from '../services/udemy/types';
-import { getStore } from './RootStore';
 import { ICouponItem } from './CouponModel';
 
 export enum HistoryStep {
@@ -44,12 +43,8 @@ export const HistoryModel = types.model('History', {
   };
 
   return {
-    autoTransitionStepUdemy: (coupons?: ICouponItem[]) => {
-        self.currentStep = HistoryStep.GO_TO_UDEMY;
-        cacheHistoryState();
-        if(coupons) {
-          chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupon: coupons[0] });
-        }
+    requestBackgroundCheckCoupon: (coupon: ICouponItem) => {
+      chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupon });
     },
     setCurrentStep: flow(function* (step: HistoryStep) {
       self.currentStep = step;
