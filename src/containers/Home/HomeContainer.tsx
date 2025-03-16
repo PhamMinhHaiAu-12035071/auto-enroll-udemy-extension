@@ -33,7 +33,7 @@ const HomeContainer: React.FC<HomeContainerProps> = observer(({ navigateTo }) =>
     }, [store, store.persistentRouter.navigationParams.fromScreen, historyStep]);
 
     return (
-        <Home activeBottomTab={activeBottomTab} setActiveBottomTab={setActiveBottomTab} restrictToDefaultTab={backgroundStatus !== BackgroundStatus.COMPLETED} />
+        <Home activeBottomTab={activeBottomTab} setActiveBottomTab={setActiveBottomTab} restrictToDefaultTab={false} />
     );
 });
 

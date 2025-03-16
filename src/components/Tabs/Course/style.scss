@@ -1,0 +1,86 @@
+.app-course-tab {
+    .custom-scrollbar::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid #e0e0e0;
+        box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 18px;
+        background-color: transparent;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        border-radius: 25px;
+        border: 4px solid transparent;
+        background-clip: content-box;
+        box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-image: linear-gradient(
+            to bottom,
+            #ff80ab 0%, 
+            #ff4081 15%, 
+            #e040fb 30%,
+            #7c4dff 45%, 
+            #536dfe 60%,
+            #448aff 75%, 
+            #40c4ff 90%, 
+            #18ffff 100%
+        );
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-button:single-button:vertical:start {
+        height: 12px;
+        width: 16px;
+        background-color: #ff86c9;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border: 2px solid white;
+        box-shadow: 0 0 2px rgba(0,0,0,0.3);
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-button:single-button:vertical:end {
+        height: 12px;
+        width: 16px;
+        background-color: #18ffff;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border: 2px solid white;
+        box-shadow: 0 0 2px rgba(0,0,0,0.3);
+    }
+    
+    /* Add candy swirl pattern overlay */
+    .custom-scrollbar::-webkit-scrollbar-thumb::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: repeating-linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.1) 5px,
+            transparent 5px,
+            transparent 10px
+        );
+        border-radius: 25px;
+        z-index: 1;
+    }
+
+    /* Add this for hiding scrollbar but keeping functionality */
+    .hide-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        
+        &::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari and Opera */
+        }
+    }
+    
+    /* We can keep the custom scrollbar styles for when we want to use them */
+    /* but they won't apply to elements with hide-scrollbar class */
+    .custom-scrollbar {
+        /* existing custom scrollbar styles... */
+    }
+}

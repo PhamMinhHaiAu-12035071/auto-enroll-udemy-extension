@@ -4,7 +4,7 @@ import BottomBar from '../../components/BottomBar';
 import Header from '../../components/Header';
 import Pager from '../../components/Pager';
 import AnalysisTab from '../../components/Tabs/AnalysisTab';
-import CourseTab from '../../components/Tabs/CourseTab';
+import CourseTab from '../../components/Tabs/Course/CourseTab';
 import HistoryTab from '../../components/Tabs/HistoryTab';
 import { BottomTab } from "../../models/PersistentRouterModel";
 
