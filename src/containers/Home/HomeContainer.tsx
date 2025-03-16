@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
 import { useStore } from "../../hooks/useStore";
+import { BackgroundStatus, HistoryStep } from "../../models/HistoryModel";
 import { NavigationParams, Screen } from "../../models/PersistentRouterModel";
 import Home from "./Home";
-import { HistoryStep } from "../../models/HistoryModel";
 
 interface HomeContainerProps {
     navigateTo: (screen: Screen, params?: NavigationParams) => void;
@@ -11,9 +11,13 @@ interface HomeContainerProps {
 
 const HomeContainer: React.FC<HomeContainerProps> = observer(({ navigateTo }) => {
     const store = useStore();
+    const activeBottomTab = store.persistentRouter.activeBottomTab;
+    const setActiveBottomTab = store.persistentRouter.setActiveBottomTab;
+    const backgroundStatus = store.history.backgroundStatus;
     const historyStep = store.history.currentStep;
     // Add a ref to track if we've already fetched coupons
     const hasFetchedCoupons = useRef(false);
+
 
     useEffect(() => {
         // Only fetch coupons if we haven't already and meet one of the conditions
@@ -29,7 +33,7 @@ const HomeContainer: React.FC<HomeContainerProps> = observer(({ navigateTo }) =>
     }, [store, store.persistentRouter.navigationParams.fromScreen, historyStep]);
 
     return (
-        <Home />
+        <Home activeBottomTab={activeBottomTab} setActiveBottomTab={setActiveBottomTab} restrictToDefaultTab={backgroundStatus !== BackgroundStatus.COMPLETED} />
     );
 });
 

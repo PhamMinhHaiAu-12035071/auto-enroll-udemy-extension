@@ -10,16 +10,22 @@ export enum HistoryStep {
   GO_TO_UDEMY = 'go_to_udemy',
 }
 
+export enum BackgroundStatus {
+  INITIAL = 'initial',
+  RUNNING = 'running',
+  COMPLETED = 'completed',
+}
+
 // Interface for history state
-interface HistoryState {
+export interface HistoryState {
   currentStep: HistoryStep;
-  isRunningBackground: boolean;
+  backgroundStatus: BackgroundStatus;
 }
 
 // Default history state values
 const DEFAULT_HISTORY_STATE = {
   currentStep: HistoryStep.INITIAL,
-  isRunningBackground: false
+  backgroundStatus: BackgroundStatus.INITIAL
 };
 
 /**
@@ -34,23 +40,23 @@ export const getInitialHistoryState = async (): Promise<HistoryState> => {
 // Model cho Coupon
 export const HistoryModel = types.model('History', {
   currentStep: types.enumeration('HistoryStep', Object.values(HistoryStep)),
-  isRunningBackground: types.optional(types.boolean, false)
+  backgroundStatus: types.enumeration('BackgroundStatus', Object.values(BackgroundStatus))
 })
 .actions(self => {
   // Helper function to cache current history state
   const cacheHistoryState = async () => {
     const historyState: HistoryState = {
       currentStep: self.currentStep,
-      isRunningBackground: self.isRunningBackground
+      backgroundStatus: self.backgroundStatus
     };
     await CacheSessionService.set<HistoryState>(SESSION_CACHE_KEYS.HISTORY_STATE, historyState);
   };
 
   return {
     requestBackgroundCheckCoupon: flow(function* (coupons: ICouponItem[]) {
-      self.isRunningBackground = true;
+      self.backgroundStatus = BackgroundStatus.RUNNING;
       yield cacheHistoryState();
-      chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupons });
+      yield chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupons });
     }),
 
     setCurrentStep: flow(function* (step: HistoryStep) {
@@ -58,8 +64,8 @@ export const HistoryModel = types.model('History', {
       yield cacheHistoryState();
     }),
 
-    setIsRunningBackground: flow(function* (isRunning: boolean) {
-      self.isRunningBackground = isRunning;
+    setBackgroundStatus: flow(function* (status: BackgroundStatus) {
+      self.backgroundStatus = status;
       yield cacheHistoryState();
     }),
 

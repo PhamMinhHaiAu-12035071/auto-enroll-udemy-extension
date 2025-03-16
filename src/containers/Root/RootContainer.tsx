@@ -2,17 +2,19 @@ import { AnimatePresence } from "framer-motion";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import Layout from "../../components/Layout/Layout";
+import { BackgroundStatus } from "../../models/HistoryModel";
 import { NavigationParams, Screen } from "../../models/PersistentRouterModel";
 import { getStore } from "../../models/RootStore";
+import { ChannelMessageAction } from "../../type";
 import AddCoursePage from "../AddCourse/AddCoursePage";
 import HomeContainer from "../Home/HomeContainer";
-
 
 
 const RootContainer: React.FC = observer(() => {
     const store = getStore();
     // Use current screen from store instead of local state
     const currentScreen = store.persistentRouter.currentScreen;
+    const setActiveBottomTab = store.persistentRouter.setActiveBottomTab;
 
     // Phương thức điều hướng mới với params
     const navigateTo = (screen: Screen, params: NavigationParams = {}) => {
@@ -41,7 +43,7 @@ const RootContainer: React.FC = observer(() => {
 
         return (
             <Layout key="addCourse">
-                <AddCoursePage navigateTo={navigateTo} />
+                <AddCoursePage navigateTo={navigateTo} setActiveBottomTab={setActiveBottomTab} />
             </Layout>
         );
     };

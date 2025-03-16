@@ -19,3 +19,10 @@ export type RowCoupon = {
     id: number;
     coupon: Coupon;
 }
+
+export type ChannelMessageAction = 'BACKGROUND_COMPLETE_CRAWL_COUPON'
+
+/// Define communication message between background and popup
+export type ChannelMessage = {
+    action: ChannelMessageAction;
+}

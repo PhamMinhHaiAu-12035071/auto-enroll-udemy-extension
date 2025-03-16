@@ -1,4 +1,4 @@
-import { Coupon } from '../../type';
+import { ChannelMessage, Coupon } from '../../type';
 import { checkoutCartPage } from './checkout_cart_page';
 import { enrollCoursePage } from './enroll_course_page';
 import { reportStore } from './report_store';
@@ -10,6 +10,9 @@ import {
   updateTabUrl,
 } from './utils';
 import { NotificationService } from '../notification/notification_service';
+import { CacheSessionService } from '../cache/cache_session_service';
+import { SESSION_CACHE_KEYS } from '../cache/cache_session_service';
+import { BackgroundStatus, HistoryState, HistoryStep } from '../../models/HistoryModel';
 
 const handleEnrollCourse = async (
   coupon: Coupon,
@@ -138,10 +141,31 @@ const messageListener = async (request: any, sender: any, sendResponse: any) => 
   }
 };
 
+const finishCrawlCoupon = async () => {
+  removeUdemyMessageListener();
+ 
+  const historyState: HistoryState = {
+    currentStep: HistoryStep.GO_TO_UDEMY,
+    backgroundStatus: BackgroundStatus.COMPLETED
+  };
+  await CacheSessionService.set<HistoryState>(SESSION_CACHE_KEYS.HISTORY_STATE, historyState);
+
+  const report = reportStore.getReport();
+  const enrolledCount = report.statistics.enrollNowCount;
+  const totalCount = report.coupons.length;
+  
+  await NotificationService.getInstance().createNotification({
+    type: 'basic',
+    title: 'Crawl Coupon Completed',
+    message: `Successfully enrolled in ${enrolledCount}/${totalCount} courses. Open the extension popup to see full details.`,
+    requireInteraction: false,
+    buttons: []
+  });
+
+}
 const crawlerCoupon = async (tabId: number) => {
   if (reportStore.getReport().count >= reportStore.getReport().coupons.length) {
-    console.log('Completed processing all coupons.');
-    removeUdemyMessageListener();
+    await finishCrawlCoupon();
     return;
   }
 

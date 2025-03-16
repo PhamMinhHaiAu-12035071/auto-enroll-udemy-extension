@@ -3,18 +3,20 @@ import Button from "../../components/Button/Button";
 import CardWarning from "../../components/CardWarning/CardWarning";
 import Header from "../../components/Header";
 import WavingCharacters from "../../components/WavingCharacters/WavingCharacters";
-import { NavigationParams, Screen } from "../../models/PersistentRouterModel";
+import { BottomTab, NavigationParams, Screen } from "../../models/PersistentRouterModel";
 
 interface AddCoursePageProps {
     navigateTo: (screen: Screen, params?: NavigationParams) => void;
+    setActiveBottomTab: (tab: BottomTab) => void;
 }
 
-const AddCoursePage: React.FC<AddCoursePageProps> = ({ navigateTo }) => {
+const AddCoursePage: React.FC<AddCoursePageProps> = ({ navigateTo, setActiveBottomTab }) => {
     const handleAddCourse = () => {
         // Ví dụ truyền params khi chuyển màn hình
         navigateTo(Screen.HOME, {
             fromScreen: Screen.ADD_COURSE,
         });
+        setActiveBottomTab(BottomTab.HISTORY);
     };
 
     return (

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { HistoryStep } from '../../models/HistoryModel';
+import { BackgroundStatus, HistoryStep } from '../../models/HistoryModel';
 import { getStore } from '../../models/RootStore';
 import BeginVisitUdemy from '../BeginVisitUdemy/BeginVisitUdemy';
 import CardSharedAnimation from '../CardSharedAnimation';
@@ -53,14 +53,14 @@ const PullCourseStateCardAnimation = observer(() => {
 const BeginVisitUdemyCardAnimation = observer(() => {
     const store = getStore();
     const isVisible = store.history.currentStep === HistoryStep.GO_TO_UDEMY;
-    const isRunningBackground = store.history.isRunningBackground;
+    const isInitial = store.history.backgroundStatus === BackgroundStatus.INITIAL;
     React.useEffect(() => {
-        if (isVisible && !isRunningBackground) {
-            setTimeout(() => {
-                store.history.requestBackgroundCheckCoupon(store.couponStore.items);
+        if (isVisible && isInitial) {
+            setTimeout(async () => {
+                await store.history.requestBackgroundCheckCoupon(store.couponStore.items);
             }, 3_000);
         }
-    }, [isVisible, store, isRunningBackground]);
+    }, [isVisible, store, isInitial]);
     return (
         <CardSharedAnimation
             className='absolute top-40 left-0 w-full h-full px-6'

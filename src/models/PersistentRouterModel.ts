@@ -11,7 +11,7 @@ export enum BottomTab {
   INITIAL = 'initial',
   COURSE = 'course',
   HISTORY = 'history',
-  ANALYTICS = 'analytics',
+  ANALYSIS = 'analysis',
 }
 
 export interface NavigationParams {
