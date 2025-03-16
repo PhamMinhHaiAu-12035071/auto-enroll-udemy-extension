@@ -43,6 +43,12 @@ export interface GotoCourseMessage {
   coupon: Coupon;
 }
 
+export interface CompleteCrawlCouponMessage {
+  action: 'COMPLETE_CRAWL_COUPON';
+  tabId: number;
+  coupon: Coupon;
+}
+
 // Define enum for all UdemyMessage actions
 export enum UdemyMessageAction {
   CHECK_COURSE = 'CHECK_COURSE',
@@ -51,6 +57,7 @@ export enum UdemyMessageAction {
   COMPLETE_ENROLL_COURSE = 'COMPLETE_ENROLL_COURSE',
   COURSE_ID_FOUND = 'COURSE_ID_FOUND',
   GOTO_COURSE = 'GOTO_COURSE',
+  COMPLETE_CRAWL_COUPON = 'COMPLETE_CRAWL_COUPON',
 }
 
 // Define union type cho tất cả các loại message có thể gửi
@@ -58,7 +65,8 @@ export type UdemyMessage =
   | CourseExpiredMessage
   | EnrollCourseMessage
   | CompleteEnrollCourseMessage
-  | GotoCourseMessage;
+  | GotoCourseMessage
+  | CompleteCrawlCouponMessage;
 
 // Define interface cho mock data
 
@@ -79,6 +87,8 @@ export interface EnrolledCourseDetail {
 
 // Interface cho báo cáo tổng hợp
 export interface EnrollmentReport {
+  count: number;
+  coupons: Coupon[];
   // Thống kê số lượng theo từng trạng thái
   statistics: {
     buyNowCount: number; // Số lượng khoá học hết hạn

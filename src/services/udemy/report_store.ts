@@ -2,10 +2,8 @@ import {
   CourseEnrollStatus,
   EnrolledCourseDetail,
   EnrollmentReport,
-  Coupon,
-  Price,
 } from './types';
-
+import { Coupon } from '../../type';
 class ReportStore {
   private static instance: ReportStore;
   private report: EnrollmentReport;
@@ -13,6 +11,8 @@ class ReportStore {
   private constructor() {
     // Khởi tạo report trống
     this.report = {
+      count: 0,
+      coupons: [],
       statistics: {
         buyNowCount: 0,
         goToCourseCount: 0,
@@ -35,6 +35,14 @@ class ReportStore {
       ReportStore.instance = new ReportStore();
     }
     return ReportStore.instance;
+  }
+
+  public incrementCount(): void {
+    this.report.count++;
+  }
+
+  public addCoupons(coupons: Coupon[]): void {
+    this.report.coupons = coupons;
   }
 
   // Thêm khoá học đã hết hạn
@@ -60,19 +68,18 @@ class ReportStore {
   }
 
   // Thêm khoá học có thể enroll
-  public addEnrollNowCourse(coupon: Coupon, originalPrice: Price): void {
+  public addEnrollNowCourse(coupon: Coupon): void {
     const courseDetail: EnrolledCourseDetail = {
       coupon,
       status: CourseEnrollStatus.ENROLL_NOW,
-      originalPrice,
     };
 
     this.report.statistics.enrollNowCount++;
     this.report.details.enrollNow.push(courseDetail);
 
     // Cập nhật tổng tiền tiết kiệm
-    this.report.savings.totalOriginalPrice += originalPrice.value;
-    this.report.savings.currency = originalPrice.currency;
+    this.report.savings.totalOriginalPrice += coupon.price ?? 0;
+    this.report.savings.currency = 'VND';
   }
 
   // Lấy toàn bộ report
@@ -83,6 +90,8 @@ class ReportStore {
   // Reset report
   public resetReport(): void {
     this.report = {
+      count: 0,
+      coupons: [],
       statistics: {
         buyNowCount: 0,
         goToCourseCount: 0,

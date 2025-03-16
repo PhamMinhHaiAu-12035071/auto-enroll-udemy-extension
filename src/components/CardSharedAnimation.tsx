@@ -61,9 +61,10 @@ const CardSharedAnimation: React.FC<CardSharedAnimationProps> = ({
     const finalVariants = variants && Object.keys(variants).length > 0 ? variants : cardContainerVariants;
 
     return (
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync">
             {isVisible && (
                 <motion.div
+                    key="card-animation"
                     initial="initial"
                     animate="visible"
                     exit="exit"

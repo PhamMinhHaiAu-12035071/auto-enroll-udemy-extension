@@ -47,10 +47,10 @@ export const HistoryModel = types.model('History', {
   };
 
   return {
-    requestBackgroundCheckCoupon: flow(function* (coupon: ICouponItem) {
+    requestBackgroundCheckCoupon: flow(function* (coupons: ICouponItem[]) {
       self.isRunningBackground = true;
       yield cacheHistoryState();
-      chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupon });
+      chrome.runtime.sendMessage({ action: UdemyMessageAction.CHECK_COURSE, coupons });
     }),
 
     setCurrentStep: flow(function* (step: HistoryStep) {

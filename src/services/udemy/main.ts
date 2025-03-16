@@ -1,5 +1,7 @@
 import { Coupon } from '../../type';
 import { checkoutCartPage } from './checkout_cart_page';
+import { enrollCoursePage } from './enroll_course_page';
+import { reportStore } from './report_store';
 import { UdemyMessageAction } from './types';
 import {
   createTabUrl,
@@ -7,13 +9,13 @@ import {
   isPaymentCheckoutUrl,
   updateTabUrl,
 } from './utils';
+import { NotificationService } from '../notification/notification_service';
 
 const handleEnrollCourse = async (
   coupon: Coupon,
   tabId: number,
   courseId: number
 ) => {
-  console.log('Đã nhận được message đăng ký khóa học');
   const cartUrl = `https://www.udemy.com/payment/checkout/express/course/${courseId}/?discountCode=${coupon.couponCode}`;
 
   await updateTabUrl(tabId, cartUrl);
@@ -68,50 +70,97 @@ const handleCompleteEnrollCourse = async (
   return false;
 };
 
+
 export const main = () => {
   chrome.runtime.onMessage.addListener(
     async (request, sender, sendResponse) => {
-      if (request.action === UdemyMessageAction.CHECK_COURSE) {
-        console.log('Received action CHECK_COURSE');
+      const action = request.action;
+      if (action === UdemyMessageAction.CHECK_COURSE) {
         
         const tab = await createTabUrl(`https://www.udemy.com/`);      
         if (!tab?.id) {
-          console.log('No tab ID found, exiting.');
+          console.error('No tab ID found, exiting.');
           return;
         }
 
-        const coupon = request.coupon as Coupon;
-        console.log('Coupon received:', coupon);
-
-        console.log('show coupon');
-        console.log(coupon);
-
-        await updateTabUrl(tab.id, coupon.link);
+        reportStore.resetReport();
+        reportStore.addCoupons(request.coupons as Coupon[]);
+        await crawlerCoupon(tab.id);
       }
-
-      // if (request.action === UdemyMessageAction.ENROLL_COURSE) {
-      //   handleEnrollCourse(request.coupon, request.tabId, request.courseId);
-      // }
-
-      // if (request.action === UdemyMessageAction.COURSE_EXPIRED) {
-      //   reportStore.addBuyNowCourse(request.coupon);
-      // }
-
-      // if (request.action === UdemyMessageAction.GOTO_COURSE) {
-      //   reportStore.addGoToCourse(request.coupon);
-      // }
-
-      // if (request.action === UdemyMessageAction.COMPLETE_ENROLL_COURSE) {
-      //   const isSuccess = await handleCompleteEnrollCourse(
-      //     request.tabId,
-      //     request.coupon
-      //   );
-
-      //   if (isSuccess) {
-      //     reportStore.addEnrollNowCourse(request.coupon, request.price);
-      //   }
-      // }
     }
   );
 };
 
+const handleCompleteCrawlCoupon = async (tabId: number) => {
+    // Remove current listener to avoid duplicate listeners
+    removeUdemyMessageListener();
+    
+    // Move to the next coupon in the list
+    reportStore.incrementCount();
+    
+    await new Promise(resolve => setTimeout(resolve, 2_000));
+    // Process the next coupon recursively
+    await crawlerCoupon(tabId);
+}
+
+const messageListener = async (request: any, sender: any, sendResponse: any) => {
+  const action = request.action;
+  if (action === UdemyMessageAction.ENROLL_COURSE) {
+    await handleEnrollCourse(request.coupon, request.tabId, request.courseId);
+  } else if (action === UdemyMessageAction.COURSE_EXPIRED) {
+     reportStore.addBuyNowCourse(request.coupon);
+  } else if (action === UdemyMessageAction.GOTO_COURSE) {
+     reportStore.addGoToCourse(request.coupon);
+  } else if (action === UdemyMessageAction.COMPLETE_ENROLL_COURSE) {
+    const isSuccess = await handleCompleteEnrollCourse(
+      request.tabId,
+      request.coupon
+    );
+
+    if (isSuccess) {
+      reportStore.addEnrollNowCourse(request.coupon);
+      
+      // Add notification for successful enrollment
+      const notificationService = NotificationService.getInstance();
+      await notificationService.createNotification({
+        type: 'basic',
+        title: 'Course Enrolled Successfully!',
+        message: `You have successfully enrolled in:\n${request.coupon.title}`,
+        requireInteraction: true,
+        buttons: [
+          { title: 'View Course' }
+        ]
+      });
+      await handleCompleteCrawlCoupon(request.tabId);
+    }
+  } else if (action === UdemyMessageAction.COMPLETE_CRAWL_COUPON) {
+    await handleCompleteCrawlCoupon(request.tabId);
+  }
+};
+
+const crawlerCoupon = async (tabId: number) => {
+  if (reportStore.getReport().count >= reportStore.getReport().coupons.length) {
+    console.log('Completed processing all coupons.');
+    removeUdemyMessageListener();
+    return;
+  }
+
+  console.log(`Processing coupon ${reportStore.getReport().count + 1}/${reportStore.getReport().coupons.length}`);
+
+  // Add the listener
+  chrome.runtime.onMessage.addListener(messageListener);
+
+  const coupon = reportStore.getReport().coupons[reportStore.getReport().count];
+  await updateTabUrl(tabId, coupon.link);
+
+  await chrome.scripting.executeScript({
+    target: { tabId },
+    func: enrollCoursePage,
+    args: [tabId, coupon], // Pass the current index and all coupons
+  });
+};
+
+// Function to remove the listener when needed
+const removeUdemyMessageListener = () => {
+  chrome.runtime.onMessage.removeListener(messageListener);
+};

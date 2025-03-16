@@ -1,7 +1,7 @@
+import { Coupon } from '../../type';
 import {
   ButtonStatus,
-  CompleteEnrollCourseMessage,
-  Coupon,
+  CompleteEnrollCourseMessage
 } from './types';
 
 export const checkoutCartPage = (tabId: number, coupon: Coupon) => {
@@ -81,14 +81,12 @@ export const checkoutCartPage = (tabId: number, coupon: Coupon) => {
       }
 
       const buttonStatus = getEnrollButtonStatus();
-      console.log('buttonStatus', buttonStatus);
 
       if (
         buttonStatus.isReady &&
         buttonStatus.buttonText &&
         isEnrollNowButton(buttonStatus.buttonText)
       ) {
-        console.log('Đã nhận được message enroll course');
         clickEnrollButton();
         sendCompleteEnrollCourseMessage(tabId, coupon);
         hasMessageSent = true;

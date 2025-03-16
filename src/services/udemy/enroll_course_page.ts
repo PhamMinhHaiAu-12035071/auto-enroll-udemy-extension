@@ -1,5 +1,6 @@
 import {
   ButtonStatus,
+  CompleteCrawlCouponMessage,
   CourseExpiredMessage,
   EnrollCourseMessage,
   GotoCourseMessage,
@@ -41,6 +42,14 @@ export const enrollCoursePage = (tabId: number, coupon: Coupon) => {
     chrome.runtime.sendMessage(message);
   };
 
+  const sendCompleteCrawlCouponMessage = (coupon: Coupon, tabId: number) => {
+    const message: CompleteCrawlCouponMessage = {
+      action: 'COMPLETE_CRAWL_COUPON',
+      coupon: coupon,
+      tabId: tabId,
+    };
+    chrome.runtime.sendMessage(message);
+  };
   // Function xử lý dựa vào text button được trả về
   const setupButtonObserverAndHandleExpired = (
     tabId: number,
@@ -59,8 +68,10 @@ export const enrollCoursePage = (tabId: number, coupon: Coupon) => {
           isGotoCourseButton(buttonStatus.buttonText)
         ) {
           sendGotoCourseMessage(coupon);
+          sendCompleteCrawlCouponMessage(coupon, tabId);
         } else {
           sendCourseExpiredMessage(coupon);
+          sendCompleteCrawlCouponMessage(coupon, tabId);
         }
         observer.disconnect();
       }

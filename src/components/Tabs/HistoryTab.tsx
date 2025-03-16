@@ -57,7 +57,7 @@ const BeginVisitUdemyCardAnimation = observer(() => {
     React.useEffect(() => {
         if (isVisible && !isRunningBackground) {
             setTimeout(() => {
-                store.history.requestBackgroundCheckCoupon(store.couponStore.items[0]);
+                store.history.requestBackgroundCheckCoupon(store.couponStore.items);
             }, 3_000);
         }
     }, [isVisible, store, isRunningBackground]);

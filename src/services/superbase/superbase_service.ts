@@ -86,46 +86,7 @@ export class SupabaseService {
    * Lấy dữ liệu với số lượng tối đa mà Supabase cho phép
    * @returns Dữ liệu trong giới hạn của Supabase
    */
-  public async getCouponsWithinLimit(mock: boolean = false) {
-    const mockCoupons = [
-      {
-        "id": "6477CC0EC37AD18BDEC9",
-        "title": "Ethically Hack the Planet Part 2",
-        "link": "https://www.udemy.com/course/ethically-hack-the-planet-part-2/?couponCode=6477CC0EC37AD18BDEC9",
-        "couponCode": "6477CC0EC37AD18BDEC9",
-        "checkTime": "2025-03-12T12:05:31.057Z",
-        "rating": 1,
-        "authors": [
-            "Cyber Twinkle"
-        ],
-        "enrollStudents": 40656,
-        "language": "English",
-        "topics": [
-            "IT & Software",
-            "Network & Security",
-            "Ethical Hacking"
-        ],
-        "price": 399000,
-        "duration": 33,
-        "image": {
-            "src": "https://img-c.udemycdn.com/course/240x135/5523566_a9a6_7.jpg",
-            "srcset": [
-                "https://img-c.udemycdn.com/course/240x135/5523566_a9a6_7.jpg 240w",
-                "https://img-c.udemycdn.com/course/480x270/5523566_a9a6_7.jpg 480w",
-                "https://img-c.udemycdn.com/course/750x422/5523566_a9a6_7.jpg 750w"
-            ],
-            "width": 330,
-            "height": 185
-        },
-        "amountRating": 188
-      }
-    ];
-    if (mock) {
-      return [{
-        id: 1,
-        coupon: mockCoupons[0]
-      } as RowCoupon] as RowCoupon[];
-    }
+  public async getCouponsWithinLimit() {
     const { data, error } = await this.client
       .from(this.tableName)
       .select('*')
