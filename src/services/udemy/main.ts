@@ -1,4 +1,7 @@
-import { ChannelMessage, Coupon } from '../../type';
+import { BackgroundStatus, HistoryState, HistoryStep } from '../../models/HistoryModel';
+import { Coupon } from '../../type';
+import { CacheSessionService, SESSION_CACHE_KEYS } from '../cache/cache_session_service';
+import { NotificationService } from '../notification/notification_service';
 import { checkoutCartPage } from './checkout_cart_page';
 import { enrollCoursePage } from './enroll_course_page';
 import { reportStore } from './report_store';
@@ -9,10 +12,6 @@ import {
   isPaymentCheckoutUrl,
   updateTabUrl,
 } from './utils';
-import { NotificationService } from '../notification/notification_service';
-import { CacheSessionService } from '../cache/cache_session_service';
-import { SESSION_CACHE_KEYS } from '../cache/cache_session_service';
-import { BackgroundStatus, HistoryState, HistoryStep } from '../../models/HistoryModel';
 
 const handleEnrollCourse = async (
   coupon: Coupon,

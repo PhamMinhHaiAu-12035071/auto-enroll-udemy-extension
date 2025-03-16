@@ -79,6 +79,7 @@ export const PersistentRouterModel = types.model('PersistentRouter', {
     reset() {
       self.currentScreen = Screen.INITIAL;
       self.activeBottomTab = BottomTab.INITIAL;
+      self.navigationParams = {};
       cacheRouterState();
     },
     

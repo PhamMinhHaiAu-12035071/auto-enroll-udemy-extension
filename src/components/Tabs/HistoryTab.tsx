@@ -32,6 +32,7 @@ const FindCourseLoadingStateCardAnimation = observer(() => {
 
 const PullCourseStateCardAnimation = observer(() => {
     const store = getStore();
+    const length = store.couponStore.items.length;
     const isVisible = store.history.currentStep === HistoryStep.PULL_COURSE;
     React.useEffect(() => {
         if (isVisible) {
@@ -45,7 +46,7 @@ const PullCourseStateCardAnimation = observer(() => {
             className='absolute top-40 left-0 w-full h-full px-6'
             isVisible={isVisible}
         >
-            <PullCourseState coursesCount={1280} />
+            <PullCourseState coursesCount={length} />
         </CardSharedAnimation>
     );
 });
@@ -54,6 +55,7 @@ const BeginVisitUdemyCardAnimation = observer(() => {
     const store = getStore();
     const isVisible = store.history.currentStep === HistoryStep.GO_TO_UDEMY;
     const isInitial = store.history.backgroundStatus === BackgroundStatus.INITIAL;
+    console.log(`background status: ${store.history.backgroundStatus}`);
     React.useEffect(() => {
         if (isVisible && isInitial) {
             setTimeout(async () => {

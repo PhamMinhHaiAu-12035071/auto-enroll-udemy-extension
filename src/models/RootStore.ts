@@ -2,6 +2,8 @@ import { Instance, flow, types } from 'mobx-state-tree';
 import { CouponModel, getInitialCouponStore } from './CouponModel';
 import { HistoryModel, getInitialHistoryState } from './HistoryModel';
 import { PersistentRouterModel, getInitialRouterState } from './PersistentRouterModel';
+import { CacheSessionService } from '../services/cache/cache_session_service';
+import { reportStore } from '../services/udemy/report_store';
 
 
 // Root Store
@@ -18,7 +20,36 @@ export const RootStore = types
       
       // Load history state from cache
       yield self.history.loadFromCache();
-    })
+    }),
+    
+    clearAllData: () => {
+      try {
+        // Reset each substore to its initial state
+        if (self.couponStore.reset) {
+           self.couponStore.reset();
+        }
+        
+        if (self.history.reset) {
+          self.history.reset();
+        }
+        
+        if (self.persistentRouter.reset) {
+          self.persistentRouter.reset();
+        }
+        
+        // Clear all session cache
+        CacheSessionService.clear();
+
+        // Clear all report data
+        reportStore.resetReport();
+        
+        console.log('All data has been cleared successfully');
+        return true;
+      } catch (error) {
+        console.error('Failed to clear data:', error);
+        return false;
+      }
+    },
   }));
 
 // Type cho instance của RootStore

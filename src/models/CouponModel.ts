@@ -95,6 +95,20 @@ export const CouponModel = types
         }, 3_000);
       }
     }),
+
+    // Add reset method
+    reset: flow(function* () {
+      // Reset store state to initial values
+      self.setItems([]);
+      self.setFetching(false);
+      self.setError(null);
+      
+      // Clear coupons from session cache
+      yield CacheSessionService.remove(SESSION_CACHE_KEYS.COUPONS);
+      
+      console.log('Coupon store has been reset');
+      return true;
+    })
   }));
 
 // Type cho instance của CouponItemModel (individual coupon)

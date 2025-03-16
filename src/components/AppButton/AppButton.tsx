@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 
-interface ButtonProps {
+interface AppButtonProps {
     text?: string;
     backgroundColor?: string;
     shadowColor?: string;
@@ -10,7 +10,7 @@ interface ButtonProps {
     onClick?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({
+const AppButton: React.FC<AppButtonProps> = ({
     text = "Push me",
     backgroundColor = "hsl(345deg 100% 47%)",
     shadowColor,
@@ -77,4 +77,4 @@ const darkenColor = (color: string): string => {
     return "hsl(340deg 100% 32%)";
 }
 
-export default Button;
+export default AppButton;

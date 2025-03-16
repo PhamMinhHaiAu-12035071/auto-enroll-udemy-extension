@@ -13,7 +13,6 @@ const HomeContainer: React.FC<HomeContainerProps> = observer(({ navigateTo }) =>
     const store = useStore();
     const activeBottomTab = store.persistentRouter.activeBottomTab;
     const setActiveBottomTab = store.persistentRouter.setActiveBottomTab;
-    const backgroundStatus = store.history.backgroundStatus;
     const historyStep = store.history.currentStep;
     // Add a ref to track if we've already fetched coupons
     const hasFetchedCoupons = useRef(false);
@@ -33,7 +32,7 @@ const HomeContainer: React.FC<HomeContainerProps> = observer(({ navigateTo }) =>
     }, [store, store.persistentRouter.navigationParams.fromScreen, historyStep]);
 
     return (
-        <Home activeBottomTab={activeBottomTab} setActiveBottomTab={setActiveBottomTab} restrictToDefaultTab={backgroundStatus !== BackgroundStatus.COMPLETED} />
+        <Home activeBottomTab={activeBottomTab} setActiveBottomTab={setActiveBottomTab} restrictToDefaultTab={store.history.backgroundStatus !== BackgroundStatus.COMPLETED} />
     );
 });
 

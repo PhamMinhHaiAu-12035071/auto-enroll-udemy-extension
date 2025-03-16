@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../components/Button/Button";
+import AppButton from "../../components/AppButton/AppButton";
 import CardWarning from "../../components/CardWarning/CardWarning";
 import Header from "../../components/Header";
 import WavingCharacters from "../../components/WavingCharacters/WavingCharacters";
@@ -21,7 +21,7 @@ const AddCoursePage: React.FC<AddCoursePageProps> = ({ navigateTo, setActiveBott
 
     return (
         <div className="relative h-[var(--popup-height)] w-[var(--popup-width)] bg-base flex flex-col">
-            <Header title="Add Course Auto Enroll" />
+            <Header title="Add Course Auto Enroll" isShowIcon={false} />
 
             <main className="flex-1 h-0 flex flex-col items-center justify-between py-4">
                 <div className="w-80 h-64">
@@ -33,7 +33,7 @@ const AddCoursePage: React.FC<AddCoursePageProps> = ({ navigateTo, setActiveBott
                         message="Please make sure that you are logged in to your Udemy account."
                     />
                 </div>
-                <Button
+                <AppButton
                     text="Add Tan's course"
                     backgroundColor="var(--color-yellow)"
                     shadowColor="hsl(0deg 0% 7.5%)"

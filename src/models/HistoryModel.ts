@@ -71,6 +71,7 @@ export const HistoryModel = types.model('History', {
 
     reset() {
       self.currentStep = HistoryStep.INITIAL;
+      self.backgroundStatus = BackgroundStatus.INITIAL;
       cacheHistoryState();
     },
     
