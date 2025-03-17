@@ -227,7 +227,27 @@ if (env.NODE_ENV === 'development') {
     minimize: true,
     minimizer: [
       new TerserPlugin({
-        extractComments: false
+        parallel: true,
+        extractComments: false,
+        terserOptions: {
+          format: {
+            comments: false
+          },
+          compress: {
+            drop_console: true,
+            drop_debugger: true,
+            pure_funcs: [
+              'console.log',
+              'console.info',
+              'console.debug',
+              'console.warn',
+              'console.error',
+              'console.trace',
+              'console.table'
+            ]
+          },
+          mangle: true
+        }
       })
     ]
   }
