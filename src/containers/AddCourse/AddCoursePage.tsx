@@ -35,8 +35,13 @@ const steps = [
         ),
         disableBeacon: true,
         styles: {
+            spotlight: {
+                padding: 12,
+                borderRadius: 24,
+            },
             options: {
                 primaryColor: '#f04',
+                spotlightClicks: false,
             }
         },
     },
