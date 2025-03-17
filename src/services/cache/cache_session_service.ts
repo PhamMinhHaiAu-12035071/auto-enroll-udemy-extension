@@ -121,4 +121,5 @@ export const SESSION_CACHE_KEYS = {
     COUPONS: 'couponsSession',
     REPORT_DATA: 'reportDataSession',
     TOUR_ADD_COURSE: 'tourAddCourseSession',
+    TOUR_BOTTOM_BAR: 'tourBottomBarSession',
 };

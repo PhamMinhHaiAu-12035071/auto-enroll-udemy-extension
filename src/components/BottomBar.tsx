@@ -46,7 +46,6 @@ const BottomBar: React.FC<BottomBarProps> = ({ restrictToDefaultTab = false, act
         }
     }, [activeBottomTab]);
 
-
     return (
         <div className="w-full bg-primary h-[56px] flex items-center">
             <div
@@ -73,6 +72,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ restrictToDefaultTab = false, act
                             onClick={() => handleTabClick(tab.id as BottomTab)}
                             disabled={isDisabled}
                             className={`
+                                ${tab.label}                                
                                 relative z-10 flex items-center justify-center h-[40px] rounded-full transition-colors duration-300
                                 flex-1 text-center font-craft-demi
                                 ${isActive ? 'text-white' : 'text-inactive hover:text-white/90'}

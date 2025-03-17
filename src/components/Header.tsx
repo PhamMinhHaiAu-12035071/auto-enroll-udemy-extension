@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ title, isShowIcon = true }) => {
 
             {isShowIcon && (
                 <div className="absolute right-4 top-3">
-                    <AppIconButton onClick={handleClick} />
+                    <AppIconButton onClick={handleClick} className="HomeClearButton" />
                 </div>
             )}
         </header >
