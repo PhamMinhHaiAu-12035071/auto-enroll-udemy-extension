@@ -1,0 +1,32 @@
+Auto-Enroll Udemy Extension
+
+Official Description for Chrome Web Store
+
+The Auto-Enroll Udemy Extension is a specialized productivity tool designed to streamline the educational content acquisition process on Udemy.com. This extension automates the course enrollment workflow, enabling users to efficiently register for multiple educational offerings with minimal manual intervention.
+
+Core Functionality:
+    Automated enrollment in Udemy courses through a streamlined interface
+    Local tracking of enrollment history and status 
+    Intuitive dashboard for monitoring enrollment progress
+    Simplified course management capabilities
+
+Privacy and Security Commitment:
+    This extension adheres to stringent data protection principles:
+    All user data is exclusively stored temporary session via Chrome's storage API
+    No personal information is transmitted to external servers
+    Session data is automatically purged upon browser closure
+    The extension operates with minimal required permissions, strictly limited to functionality essential for its operation
+    Complete compliance with Chrome Extension Program Policies and data handling guidelines
+
+Our privacy-by-design approach ensures that user data remains under the complete control of the individual user at all times. The extension's source code has undergone thorough security review to prevent potential vulnerabilities.
+
+Ongoing Maintenance and Support:
+    We are committed to regular updates to maintain compatibility with Udemy's platform, prompt resolution of any reported issues, continuous improvement based on user feedback, and transparent communication regarding any significant changes.
+
+Contact Information:
+    For immediate assistance or inquiries regarding this extension:
+    Email: hiepnonh@gmail.com
+    Response Time: Within 24-48 hours
+    Support Languages: English, Vietnamese
+
+We welcome any questions regarding our implementation, security measures, or functionality, and are committed to providing a secure, reliable tool that enhances the educational experience on Udemy.com while maintaining the highest standards of user privacy and data protection.
