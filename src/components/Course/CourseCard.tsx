@@ -104,7 +104,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
             <div className={`pushable`} style={pushableStyle}>
                 <div className={`front flex flex-row`} style={frontStyle}>
                     <CourseImage
-                        src="https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg"
+                        src={coupon.image?.src ?? ""}
                         alt={coupon.title || "Course"}
                         borderRadius={formattedBorderRadius}
                     />
