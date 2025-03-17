@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Auto-Enroll Udemy Extension</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --bg-color: #ffffff;
+            --accent-light: #dbeafe;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(to bottom, var(--accent-light), var(--bg-color));
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .last-updated {
+            color: #64748b;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        .reviewer-note {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-light);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        p, li {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .permission-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .permission-item {
+            background: var(--accent-light);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .permission-icon {
+            margin-right: 1rem;
+            color: var(--primary-color);
+        }
+
+        code {
+            background: var(--accent-light);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .contact-info {
+            background: var(--accent-light);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 1rem;
+            }
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        @media print {
+            .scroll-top {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Privacy Policy</h1>
+            <h2>Auto-Enroll Udemy Extension</h2>
+            <p class="last-updated">Last Updated: March 16, 2025</p>
+        </div>
+
+        <div class="reviewer-note section">
+            <h2>Formal Statement for Chrome Extension Review</h2>
+            <p>This document articulates the privacy practices implemented within our Chrome Extension, designed to enhance the educational experience on Udemy through automated course enrollment functionality.</p>
+
+            <h3>Purpose and Functionality Overview</h3>
+            <p>The Auto-Enroll Udemy Extension is a productivity tool that streamlines the educational content acquisition process on Udemy.com. This Chrome Extension operates with minimal data collection and adheres strictly to Chrome Extension Program Policies regarding user privacy and security.</p>
+
+            <h3>Data Collection, Storage, and Permissions Justification</h3>
+            <p>Our extension implements privacy-by-design principles with the following specific data handling practices:</p>
+            <div class="permission-list">
+                <div class="permission-item">
+                    <span class="permission-icon">🔒</span>
+                    <div>
+                        <strong>Local Storage Only</strong>
+                        <p>All user data is exclusively stored locally via Chrome's storage API. No personal information is transmitted to external servers or third parties.</p>
+                    </div>
+                </div>
+                <div class="permission-item">
+                    <span class="permission-icon">⏳</span>
+                    <div>
+                        <strong>Temporary Data Retention</strong>
+                        <p>Course enrollment information (IDs, titles, status) is temporarily maintained and automatically purged upon browser session closure.</p>
+                    </div>
+                </div>
+                <div class="permission-item">
+                    <span class="permission-icon">🔑</span>
+                    <div>
+                        <strong>Permission Justification</strong>
+                        <ul>
+                            <li><code>tabs</code>: Required to identify and interact with Udemy course pages</li>
+                            <li><code>scripting</code>: Essential for automating the enrollment workflow</li>
+                            <li><code>storage</code>: Necessary for maintaining ephemeral session data</li>
+                            <li><code>notifications</code>: Enables user alerts regarding enrollment status</li>
+                            <li><code>host_permissions</code>: Strictly limited to the Udemy domain</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="permission-item">
+                    <span class="permission-icon">🔄</span>
+                    <div>
+                        <strong>Third-Party Interaction</strong>
+                        <p>The extension solely interfaces with Udemy.com, with no additional external connections established.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Introduction</h2>
+            <p>Welcome to the Auto-Enroll Udemy Extension. We respect your privacy and are committed to protecting your personal data. This privacy policy explains how we handle data when you use our Extension.</p>
+        </div>
+
+        <div class="section">
+            <h2>Who We Are</h2>
+            <p>This Extension is developed and maintained as an independent educational tool designed to automate the enrollment process for Udemy courses.</p>
+        </div>
+
+        <div class="section">
+            <h2>Data Storage and Security</h2>
+            <p>All data collected by our Extension is temporarily stored in Chrome's session storage and is automatically cleared when you close your browser. We do not collect or store any personal information, and we do not transmit any data to external servers.</p>
+        </div>
+
+        <div class="section">
+            <h2>Your Rights</h2>
+            <ul>
+                <li>Clear all data stored by the Extension at any time using the "Clear All Data" button</li>
+                <li>Uninstall the Extension, which will remove all locally stored data</li>
+            </ul>
+        </div>
+
+        <div class="contact-info">
+            <h2>Contact Us</h2>
+            <p>If you have any questions about this privacy policy or our Extension, please contact us at:</p>
+            <p>Email: hiepnonh@gmail.com</p>
+        </div>
+
+        <div class="section">
+            <h2>Consent</h2>
+            <p>By installing and using our Extension, you consent to our privacy policy.</p>
+        </div>
+    </div>
+
+    <button class="scroll-top" id="scrollTop" title="Scroll to top">↑</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollButton = document.getElementById('scrollTop');
+
+            // Show/hide scroll button
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollButton.classList.add('visible');
+                } else {
+                    scrollButton.classList.remove('visible');
+                }
+            });
+
+            // Smooth scroll to top
+            scrollButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Add fade-in animation to sections
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            sections.forEach(section => {
+                section.style.opacity = 0;
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
