@@ -76,7 +76,7 @@ export const CouponModel = types
         // Fetch from API if no cache or force refresh
         if (!coupons) {
           const rows: RowCoupon[] = yield SupabaseService.getInstance().getCouponsWithinLimit();
-          coupons = rows.map(row => row.coupon).slice(9, 10) as ICouponItem[];
+          coupons = rows.map(row => row.coupon) as ICouponItem[];
           
           // Cache the results in session cache
           yield CacheSessionService.set<ICouponItem[]>(SESSION_CACHE_KEYS.COUPONS, coupons);
